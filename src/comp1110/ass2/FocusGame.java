@@ -9,6 +9,7 @@ import java.util.Set;
  * (https://www.smartgames.eu/uk/one-player-games/iq-focus)
  */
 public class FocusGame {
+    
 
     /**
      * Determine whether a piece placement is well-formed according to the
