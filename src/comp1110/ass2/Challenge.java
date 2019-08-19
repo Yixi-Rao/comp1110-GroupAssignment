@@ -2,14 +2,14 @@ package comp1110.ass2;
 
 public class Challenge {
     private String challenge;
-    private Colous[] initialColous;
+    private Colours[] initialColous;
 
     public Challenge(String challenge){
         this.challenge = challenge;
 
     }
 
-    public Colous[] getInitialColous(){
+    public Colours[] getInitialColous(){
         return initialColous;
     }
 

@@ -1,6 +1,6 @@
 package comp1110.ass2;
 
-public enum Colous {
+public enum Colours {
     BLUE,
     WHITE,
     RED,
