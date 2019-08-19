@@ -24,8 +24,19 @@ public class FocusGame {
      * @return True if the piece placement is well-formed
      */
     static boolean isPiecePlacementWellFormed(String piecePlacement) {
+        if (piecePlacement.length() != 4)
+            return false;
+        if ( !((int)'a' <= piecePlacement.charAt(0) && piecePlacement.charAt(0) <= (int)'j'))
+            return false;
+        if (!(0 <= Integer.parseInt(piecePlacement.substring(1,2)) && Integer.parseInt(piecePlacement.substring(1,2)) <= 8 ))
+            return false;
+        if (!(0 <= Integer.parseInt(piecePlacement.substring(2,3)) && Integer.parseInt(piecePlacement.substring(2,3)) <= 4 ))
+            return false;
+        if (!(0 <= Integer.parseInt(piecePlacement.substring(3,4)) && Integer.parseInt(piecePlacement.substring(3,4)) <= 3 ))
+            return false;
+
         // FIXME Task 2: determine whether a piece placement is well-formed
-        return false;
+        return true;
     }
 
     /**
