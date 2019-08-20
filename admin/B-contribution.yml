@@ -10,8 +10,8 @@ declaration: >-
 contributions:
   - uid: u6826541
     contribution: 33
-  - uid:
-    contribution:
+  - uid: u6825691
+    contribution: 33
   - uid:
     contribution:
 
@@ -20,7 +20,7 @@ contributions:
 signatures:
   - name: Yixi Rao
     uid: u6826541
-  - name:
-    uid:
+  - name: Wenxuan Li
+    uid: u6825691
   - name:
     uid:
