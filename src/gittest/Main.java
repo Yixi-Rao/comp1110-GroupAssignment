@@ -2,8 +2,10 @@ package gittest;
 
 public class Main {
     public void main(){
+        A a = new A();
+
         C c = new C();
 
-        B a = new B();
+        B b = new B();
     }
 }
