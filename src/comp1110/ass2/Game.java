@@ -4,7 +4,7 @@ public class Game {
     private Challenge challenge;
     private Colours[][] gameStates;
 
-    private Piece[][] pieces = new Piece[4][8];
+    private Piece[][] pieces = new Piece[5][9];
 
     public Game(Challenge challenge) {this.challenge = challenge;}
 
