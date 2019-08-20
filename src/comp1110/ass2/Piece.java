@@ -5,10 +5,10 @@ import javafx.geometry.Orientation;
 import javax.print.attribute.standard.OrientationRequested;
 
 public class Piece {
-    private PiecesType piecesType;
-    private Location location;
-    private Orientation orientation;
-    private Colours colours;
+    private PiecesType piecesType;  // Which tile type is it (a ... j)
+    private Location location;      // The piece's current location on game
+    private Orientation orientation;// The piece's current orientation
+    private Colours colours;        // The piece's colours
 
     public Piece(String piece){
 
