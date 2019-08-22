@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -49,8 +50,28 @@ public class FocusGame {
      * @return True if the placement is well-formed
      */
     public static boolean isPlacementStringWellFormed(String placement) {
+        if (placement.length() % 4 != 0 || (4 > placement.length() || placement.length() > 40)){
+            System.out.println(placement.length() % 4);
+            System.out.println(placement.length());
+            return false;
+        }
+        String type = "";
+        for (int i = 0;i < placement.length()/4;i++) {
+            String piece = placement.substring(4 * i, 4 + (4 * i));
+            if (!isPiecePlacementWellFormed(piece)){
+                return false;
+            }
+            type = type + piece.charAt(0);
+        }
+        for (int i = 0;i < type.length();i++) {
+            String first = ""+type.charAt(i);
+            type = type.replace(type.charAt(i)+"","@");
+            System.out.println(type);
+            if (type.contains(""+first))
+                return false;
+        }
         // FIXME Task 3: determine whether a placement is well-formed
-        return false;
+        return true;
     }
 
     /**
@@ -120,5 +141,9 @@ public class FocusGame {
     public static String getSolution(String challenge) {
         // FIXME Task 9: determine the solution to the game, given a particular challenge
         return null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isPiecePlacementWellFormed("a"));
     }
 }
