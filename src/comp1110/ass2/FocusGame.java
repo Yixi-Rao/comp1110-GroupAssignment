@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -28,11 +29,11 @@ public class FocusGame {
             return false;
         if ( !((int)'a' <= piecePlacement.charAt(0) && piecePlacement.charAt(0) <= (int)'j'))
             return false;
-        if (!(0 <= Integer.parseInt(piecePlacement.substring(1,2)) && Integer.parseInt(piecePlacement.substring(1,2)) <= 8 ))
+        if (!((int)'0' <= piecePlacement.charAt(1) && piecePlacement.charAt(1) <= (int)'8'))
             return false;
-        if (!(0 <= Integer.parseInt(piecePlacement.substring(2,3)) && Integer.parseInt(piecePlacement.substring(2,3)) <= 4 ))
+        if (!((int)'0' <= piecePlacement.charAt(2) && piecePlacement.charAt(2) <= (int)'4'))
             return false;
-        if (!(0 <= Integer.parseInt(piecePlacement.substring(3,4)) && Integer.parseInt(piecePlacement.substring(3,4)) <= 3 ))
+        if (!((int)'0' <= piecePlacement.charAt(3) && piecePlacement.charAt(3) <= (int)'3'))
             return false;
 
         // FIXME Task 2: determine whether a piece placement is well-formed
@@ -49,8 +50,9 @@ public class FocusGame {
      * @return True if the placement is well-formed
      */
     public static boolean isPlacementStringWellFormed(String placement) {
+
         // FIXME Task 3: determine whether a placement is well-formed
-        return false;
+        return true;
     }
 
     /**
@@ -120,5 +122,9 @@ public class FocusGame {
     public static String getSolution(String challenge) {
         // FIXME Task 9: determine the solution to the game, given a particular challenge
         return null;
+    }
+
+    public static void main(String[] args) {
+
     }
 }
