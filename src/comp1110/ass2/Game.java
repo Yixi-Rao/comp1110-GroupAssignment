@@ -2,7 +2,13 @@ package comp1110.ass2;
 
 public class Game {
     private Challenge challenge;
-    private Colours[][] gameStates;
+    private Colours[][] gameStates = {
+            {null,null,null,null,null,null,null,null,null},
+            {null,null,null,null,null,null,null,null,null},
+            {null,null,null,null,null,null,null,null,null},
+            {null,null,null,null,null,null,null,null,null},
+            {null,null,null,null,null,null,null,null,null}
+    };
 
     private Piece[][] pieces = new Piece[5][9];
 
