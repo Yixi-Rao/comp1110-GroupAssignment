@@ -53,6 +53,8 @@ public class FocusGame {
 
         // FIXME Task 3: determine whether a placement is well-formed
         return true;
+
+
     }
 
     /**
