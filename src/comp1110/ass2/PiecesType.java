@@ -1,7 +1,5 @@
 package comp1110.ass2;
 
-import static comp1110.ass2.Orientation.*;
-
 public enum PiecesType {
     A,B,C,D,E,F,G,H,I,J;
 
@@ -13,7 +11,6 @@ public enum PiecesType {
         }
         return locations;
     }
-
 
     private static int[][][] pieceMapOffset = new int[][][]{
             {{0,0,1,0,2,0,1,1}, {1,0,0,1,1,1,1,2}, {1,0,0,1,1,1,2,1}, {0,0,0,1,1,1,0,2}},
@@ -29,9 +26,9 @@ public enum PiecesType {
     };
 
     public static void main(String[] args) {
-        Location[] l = J.createPiece(3,3,SOUTH);
-        for (Location i:l) {
-            System.out.println(i.getX()+"|"+i.getY());
-        }
+        //Location[] l = J.createPiece(3,3,SOUTH);
+        //for (Location i:l) {
+        //   System.out.println(i.getX()+"|"+i.getY());
+        //}
     }
 }

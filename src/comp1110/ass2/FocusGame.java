@@ -1,8 +1,6 @@
 package comp1110.ass2;
 
-import java.util.Arrays;
 import java.util.Set;
-
 /**
  * This class provides the text interface for the IQ Focus Game
  * <p>
@@ -10,7 +8,17 @@ import java.util.Set;
  * (https://www.smartgames.eu/uk/one-player-games/iq-focus)
  */
 public class FocusGame {
-    
+
+    public Colours[][] gameStates = {
+            {null,null,null,null,null,null,null,null,null},
+            {null,null,null,null,null,null,null,null,null},
+            {null,null,null,null,null,null,null,null,null},
+            {null,null,null,null,null,null,null,null,null},
+            {null,null,null,null,null,null,null,null,null}
+    };
+
+    public static Piece[][] pieces = new Piece[5][9];
+
 
     /**
      * Determine whether a piece placement is well-formed according to the
@@ -50,7 +58,22 @@ public class FocusGame {
      * @return True if the placement is well-formed
      */
     public static boolean isPlacementStringWellFormed(String placement) {
+        if (placement.length() % 4 != 0 || (4 > placement.length() || placement.length() > 40)){
+            return false;}
 
+        String type = "";
+        for (int i = 0;i < placement.length()/4;i++) {
+            String piece = placement.substring(4 * i, 4 + (4 * i));
+            if (!isPiecePlacementWellFormed(piece))
+                return false;
+            type = type + piece.charAt(0);
+        }
+        for (int i = 0;i < type.length();i++) {
+            String first = ""+type.charAt(i);
+            type = type.replace(type.charAt(i)+"","@");
+            if (type.contains(""+first))
+                return false;
+        }
         // FIXME Task 3: determine whether a placement is well-formed
         return true;
 
@@ -71,9 +94,65 @@ public class FocusGame {
      * @return True if the placement sequence is valid
      */
     public static boolean isPlacementStringValid(String placement) {
+        if (!isPlacementStringWellFormed(placement)){
+            return false;}
+        for (int i = 0;i < placement.length()/4;i++) {
+            String subpiece = placement.substring(4 * i, 4 + (4 * i));
+            if (!isPieceOnBoard(subpiece)){
+                pieces = new Piece[5][9];
+                return false;}
+            if (isPieceOverlap(subpiece)){
+                pieces = new Piece[5][9];
+                return false;}
+            addPiece(new Piece(subpiece));
+        }
+        pieces = new Piece[5][9];
         // FIXME Task 5: determine whether a placement string is valid
+        return true;
+    }
+    public static boolean isPieceOnBoard(String piece){
+        Piece piece1 = new Piece(piece);
+        int x = piece1.getLocation().getX();
+        int y = piece1.getLocation().getY();
+        PiecesType type = piece1.getPiecesType();
+        Orientation orientation = piece1.getOrientation();
+        Location[] locations = type.createPiece(x,y,orientation);
+
+        for (Location l:locations){
+            if (l.getX() < 0 || l.getX() > 8)
+                return false;
+            if (l.getY() < 0 || l.getY() > 4)
+                return false;
+            if ((l.getX() == 0 && l.getY() == 4) ||(l.getX() == 8 && l.getY() == 4))
+                return false;
+        }
+        return true;
+    }
+
+    public static boolean isPieceOverlap(String piece) {
+        Piece piece2 = new Piece(piece);
+        int x = piece2.getLocation().getX();
+        int y = piece2.getLocation().getY();
+        PiecesType type = piece2.getPiecesType();
+        Orientation orientation = piece2.getOrientation();
+        Location[] locations = type.createPiece(x,y,orientation);
+
+        for (Location l:locations){
+            if (pieces[l.getY()][l.getX()] != null)
+                return true;
+        }
         return false;
     }
+
+    public static void addPiece(Piece piece){
+        Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
+        for (Location l:locations){
+            pieces[l.getY()][l.getX()] = piece;
+
+        }
+    }
+
+
 
     /**
      * Given a string describing a placement of pieces and a string describing
@@ -127,6 +206,5 @@ public class FocusGame {
     }
 
     public static void main(String[] args) {
-
     }
 }
