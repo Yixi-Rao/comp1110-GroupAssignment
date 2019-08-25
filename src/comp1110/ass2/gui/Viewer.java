@@ -10,7 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 /**
  * A very simple viewer for piece placements in the IQ-Focus game.
  * <p>
@@ -19,6 +20,46 @@ import javafx.stage.Stage;
  * placements.
  */
 public class Viewer extends Application {
+    Image a0 = new Image("comp1110/ass2/gui/assets/a0.png");
+    Image a1 = new Image("comp1110/ass2/gui/assets/a1.png");
+    Image a2 = new Image("comp1110/ass2/gui/assets/a2.png");
+    Image a3 = new Image("comp1110/ass2/gui/assets/a3.png");
+    Image b0 = new Image("comp1110/ass2/gui/assets/b0.png");
+    Image b1 = new Image("comp1110/ass2/gui/assets/b1.png");
+    Image b2 = new Image("comp1110/ass2/gui/assets/b2.png");
+    Image b3 = new Image("comp1110/ass2/gui/assets/b3.png");
+    Image c0 = new Image("comp1110/ass2/gui/assets/c0.png");
+    Image c1 = new Image("comp1110/ass2/gui/assets/c1.png");
+    Image c2 = new Image("comp1110/ass2/gui/assets/c2.png");
+    Image c3 = new Image("comp1110/ass2/gui/assets/c3.png");
+    Image d0 = new Image("comp1110/ass2/gui/assets/d0.png");
+    Image d1 = new Image("comp1110/ass2/gui/assets/d1.png");
+    Image d2 = new Image("comp1110/ass2/gui/assets/d2.png");
+    Image d3 = new Image("comp1110/ass2/gui/assets/d3.png");
+    Image e0 = new Image("comp1110/ass2/gui/assets/e0.png");
+    Image e1 = new Image("comp1110/ass2/gui/assets/e1.png");
+    Image e2 = new Image("comp1110/ass2/gui/assets/e2.png");
+    Image e3 = new Image("comp1110/ass2/gui/assets/e3.png");
+    Image f0 = new Image("comp1110/ass2/gui/assets/f0.png");
+    Image f1 = new Image("comp1110/ass2/gui/assets/f1.png");
+    Image f2 = new Image("comp1110/ass2/gui/assets/f2.png");
+    Image f3 = new Image("comp1110/ass2/gui/assets/f3.png");
+    Image g0 = new Image("comp1110/ass2/gui/assets/g0.png");
+    Image g1 = new Image("comp1110/ass2/gui/assets/g1.png");
+    Image g2 = new Image("comp1110/ass2/gui/assets/g2.png");
+    Image g3 = new Image("comp1110/ass2/gui/assets/g3.png");
+    Image h0 = new Image("comp1110/ass2/gui/assets/h0.png");
+    Image h1 = new Image("comp1110/ass2/gui/assets/h1.png");
+    Image h2 = new Image("comp1110/ass2/gui/assets/h2.png");
+    Image h3 = new Image("comp1110/ass2/gui/assets/h3.png");
+    Image i0 = new Image("comp1110/ass2/gui/assets/i0.png");
+    Image i1 = new Image("comp1110/ass2/gui/assets/i1.png");
+    Image i2 = new Image("comp1110/ass2/gui/assets/i2.png");
+    Image i3 = new Image("comp1110/ass2/gui/assets/i3.png");
+    Image j0 = new Image("comp1110/ass2/gui/assets/j0.png");
+    Image j1 = new Image("comp1110/ass2/gui/assets/j1.png");
+    Image j2 = new Image("comp1110/ass2/gui/assets/j2.png");
+    Image j3 = new Image("comp1110/ass2/gui/assets/j3.png");
 
     /* board layout */
     private static final int SQUARE_SIZE = 60;
