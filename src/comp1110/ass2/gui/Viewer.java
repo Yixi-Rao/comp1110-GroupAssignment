@@ -1,5 +1,6 @@
 package comp1110.ass2.gui;
 
+import com.sun.glass.ui.View;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,10 +9,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * A very simple viewer for piece placements in the IQ-Focus game.
  * <p>
@@ -20,57 +30,105 @@ import javafx.scene.image.Image;
  * placements.
  */
 public class Viewer extends Application {
-    Image a0 = new Image("comp1110/ass2/gui/assets/a0.png");
-    Image a1 = new Image("comp1110/ass2/gui/assets/a1.png");
-    Image a2 = new Image("comp1110/ass2/gui/assets/a2.png");
-    Image a3 = new Image("comp1110/ass2/gui/assets/a3.png");
-    Image b0 = new Image("comp1110/ass2/gui/assets/b0.png");
-    Image b1 = new Image("comp1110/ass2/gui/assets/b1.png");
-    Image b2 = new Image("comp1110/ass2/gui/assets/b2.png");
-    Image b3 = new Image("comp1110/ass2/gui/assets/b3.png");
-    Image c0 = new Image("comp1110/ass2/gui/assets/c0.png");
-    Image c1 = new Image("comp1110/ass2/gui/assets/c1.png");
-    Image c2 = new Image("comp1110/ass2/gui/assets/c2.png");
-    Image c3 = new Image("comp1110/ass2/gui/assets/c3.png");
-    Image d0 = new Image("comp1110/ass2/gui/assets/d0.png");
-    Image d1 = new Image("comp1110/ass2/gui/assets/d1.png");
-    Image d2 = new Image("comp1110/ass2/gui/assets/d2.png");
-    Image d3 = new Image("comp1110/ass2/gui/assets/d3.png");
-    Image e0 = new Image("comp1110/ass2/gui/assets/e0.png");
-    Image e1 = new Image("comp1110/ass2/gui/assets/e1.png");
-    Image e2 = new Image("comp1110/ass2/gui/assets/e2.png");
-    Image e3 = new Image("comp1110/ass2/gui/assets/e3.png");
-    Image f0 = new Image("comp1110/ass2/gui/assets/f0.png");
-    Image f1 = new Image("comp1110/ass2/gui/assets/f1.png");
-    Image f2 = new Image("comp1110/ass2/gui/assets/f2.png");
-    Image f3 = new Image("comp1110/ass2/gui/assets/f3.png");
-    Image g0 = new Image("comp1110/ass2/gui/assets/g0.png");
-    Image g1 = new Image("comp1110/ass2/gui/assets/g1.png");
-    Image g2 = new Image("comp1110/ass2/gui/assets/g2.png");
-    Image g3 = new Image("comp1110/ass2/gui/assets/g3.png");
-    Image h0 = new Image("comp1110/ass2/gui/assets/h0.png");
-    Image h1 = new Image("comp1110/ass2/gui/assets/h1.png");
-    Image h2 = new Image("comp1110/ass2/gui/assets/h2.png");
-    Image h3 = new Image("comp1110/ass2/gui/assets/h3.png");
-    Image i0 = new Image("comp1110/ass2/gui/assets/i0.png");
-    Image i1 = new Image("comp1110/ass2/gui/assets/i1.png");
-    Image i2 = new Image("comp1110/ass2/gui/assets/i2.png");
-    Image i3 = new Image("comp1110/ass2/gui/assets/i3.png");
-    Image j0 = new Image("comp1110/ass2/gui/assets/j0.png");
-    Image j1 = new Image("comp1110/ass2/gui/assets/j1.png");
-    Image j2 = new Image("comp1110/ass2/gui/assets/j2.png");
-    Image j3 = new Image("comp1110/ass2/gui/assets/j3.png");
 
     /* board layout */
     private static final int SQUARE_SIZE = 60;
     private static final int VIEWER_WIDTH = 720;
     private static final int VIEWER_HEIGHT = 480;
 
+    // External frame line of the game area
+    private static final double EX_FRAME_X = SQUARE_SIZE * 1.5;
+    private static final double EX_FRAME_Y = SQUARE_SIZE;
+    private static final double EX_FRAME_LEN_X = SQUARE_SIZE * 9.0;
+    private static final double EX_FRAME_LEN_Y = SQUARE_SIZE * 5.0;
+    private static final int EX_FRAME_STROKE = 2;
+    private static final Color EX_FRAME_COLOR = Color.BLACK;
+    private static final Color EX_FRAME_FILL = Color.LIGHTGREY;
+
+    // Internal frame line of the game area
+    private static final double IN_FRAME_X = EX_FRAME_X + SQUARE_SIZE * 3.0;
+    private static final double IN_FRAME_Y = EX_FRAME_Y + SQUARE_SIZE * 1.0;
+    private static final double IN_FRAME_LEN_X = SQUARE_SIZE * 3.0;
+    private static final double IN_FRAME_LEN_Y = SQUARE_SIZE * 3.0;
+    private static final int IN_FRAME_STROKE = 2;
+    private static final Color IN_FRAME_COLOR = Color.RED;
+    private static final Color IN_FRAME_FILL = Color.TRANSPARENT;
+
+    // Square lines inside the game area
+    private static final int LINE_STROKE = 1;
+    private static final Color LINE_COLOR = Color.GREY;
+
+    // Resource location
     private static final String URI_BASE = "assets/";
 
+    // Group setting
     private final Group root = new Group();
+    private final Group graphs = new Group();
+    private final Group layouts = new Group();
     private final Group controls = new Group();
+
+    // Text field
     private TextField textField;
+
+    // Map for piece size, form as - pieceType: [pieceWidth, pieceHeight]
+    private final Map<String, double[]> pieceSizes = new HashMap<>() {{
+        put("a", new double[] {SQUARE_SIZE * 3.0, SQUARE_SIZE * 2.0});
+        put("b", new double[] {SQUARE_SIZE * 4.0, SQUARE_SIZE * 2.0});
+        put("c", new double[] {SQUARE_SIZE * 4.0, SQUARE_SIZE * 2.0});
+        put("d", new double[] {SQUARE_SIZE * 3.0, SQUARE_SIZE * 2.0});
+        put("e", new double[] {SQUARE_SIZE * 3.0, SQUARE_SIZE * 2.0});
+        put("f", new double[] {SQUARE_SIZE * 3.0, SQUARE_SIZE * 1.0});
+        put("g", new double[] {SQUARE_SIZE * 3.0, SQUARE_SIZE * 2.0});
+        put("h", new double[] {SQUARE_SIZE * 3.0, SQUARE_SIZE * 3.0});
+        put("i", new double[] {SQUARE_SIZE * 2.0, SQUARE_SIZE * 2.0});
+        put("j", new double[] {SQUARE_SIZE * 4.0, SQUARE_SIZE * 2.0});
+    }};
+
+    private Line drawLine(double startX, double startY, double endX, double endY) {
+        Line line = new Line(startX, startY, endX, endY);
+        line.setStroke(LINE_COLOR);
+        line.setStrokeWidth(LINE_STROKE);
+        return line;
+    }
+
+    private Rectangle drawRectangle(double startX, double startY, double sideLenX, double sideLenY,
+                                    int strokeWidth, Color strokeColor, Color fillColor) {
+        Rectangle rectangle = new Rectangle(startX, startY, sideLenX, sideLenY);
+        rectangle.setFill(fillColor);
+        rectangle.setStroke(strokeColor);
+        rectangle.setStrokeWidth(strokeWidth);
+        return rectangle;
+    }
+
+    void drawGameArea() {
+        // Draw external frame line
+        Rectangle externalFrame = drawRectangle(
+                EX_FRAME_X, EX_FRAME_Y, EX_FRAME_LEN_X, EX_FRAME_LEN_Y,
+                EX_FRAME_STROKE, EX_FRAME_COLOR, EX_FRAME_FILL);
+        layouts.getChildren().add(externalFrame);
+
+        // Draw internal frame line
+        Rectangle internalFrame = drawRectangle(
+                IN_FRAME_X, IN_FRAME_Y, IN_FRAME_LEN_X, IN_FRAME_LEN_Y,
+                IN_FRAME_STROKE, IN_FRAME_COLOR, IN_FRAME_FILL);
+        layouts.getChildren().add(internalFrame);
+
+        // Draw horizontal checker lines inside game area
+        double endX = EX_FRAME_X + EX_FRAME_LEN_X;
+        for (int index = 1; index < 5; index++) {
+            double y = EX_FRAME_Y + SQUARE_SIZE * index;
+            Line line = drawLine(EX_FRAME_X, y, endX, y);
+            layouts.getChildren().addAll(line);
+        }
+
+        // Draw vertical checker lines inside game area
+        double endY = EX_FRAME_Y + EX_FRAME_LEN_Y;
+        for (int index = 1; index < 10; index++) {
+            double x = EX_FRAME_X + SQUARE_SIZE * index;
+            Line line = drawLine(x, EX_FRAME_Y, x, endY);
+            layouts.getChildren().addAll(line);
+        }
+    }
 
     /**
      * Draw a placement in the window, removing any previously drawn one
@@ -78,7 +136,39 @@ public class Viewer extends Application {
      * @param placement A valid placement string
      */
     void makePlacement(String placement) {
-        // FIXME Task 4: implement the simple placement viewer
+        graphs.getChildren().clear();
+        if (!placement.isBlank()) {
+            String[] pieces = placement.split("(?<=\\G.{4})");
+            for (String piece: pieces) {
+                System.out.println(piece);
+                String pieceName = piece.substring(0, 1);
+                int pieceX = Integer.parseInt(piece.substring(1, 2));
+                int pieceY = Integer.parseInt(piece.substring(2, 3));
+                int pieceOri = Integer.parseInt(piece.substring(3));
+
+                double pieceWidth = pieceSizes.get(pieceName)[0];
+                double pieceHeight = pieceSizes.get(pieceName)[1];
+
+                double pieceStartX = EX_FRAME_X + SQUARE_SIZE * pieceX;
+                double pieceStartY = EX_FRAME_Y + SQUARE_SIZE * pieceY;
+                if (pieceOri % 2 == 1) { // Spherical Coordinate Transform
+                    pieceStartX -= (pieceWidth - pieceHeight) / 2.0;
+                    pieceStartY += (pieceWidth - pieceHeight) / 2.0;
+                }
+
+                String piecePath = Viewer.class.getResource(URI_BASE + pieceName + ".png").toString();
+                ImageView pieceView = new ImageView(new Image(piecePath));
+
+                pieceView.setFitWidth(pieceWidth);
+                pieceView.setFitHeight(pieceHeight);
+                pieceView.setRotate(90.0 * pieceOri);
+
+                pieceView.setX(pieceStartX);
+                pieceView.setY(pieceStartY);
+
+                graphs.getChildren().add(pieceView);
+            }
+        }
     }
 
     /**
@@ -89,12 +179,9 @@ public class Viewer extends Application {
         textField = new TextField();
         textField.setPrefWidth(300);
         Button button = new Button("Refresh");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                makePlacement(textField.getText());
-                textField.clear();
-            }
+        button.setOnAction(event -> {
+            makePlacement(textField.getText());
+            textField.clear();
         });
         HBox hb = new HBox();
         hb.getChildren().addAll(label1, textField, button);
@@ -109,9 +196,13 @@ public class Viewer extends Application {
         primaryStage.setTitle("FocusGame Viewer");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
 
+        root.getChildren().add(layouts);
         root.getChildren().add(controls);
 
+        drawGameArea();
         makeControls();
+
+        root.getChildren().add(graphs);
 
         primaryStage.setScene(scene);
         primaryStage.show();
