@@ -4,7 +4,6 @@ public enum Orientation {
     NORTH, EAST, SOUTH, WEST;
 
     public char toChar() {
-        // FIXME Task 2
         if (this == NORTH ){
             return '0';
         }else if (this == EAST){
@@ -14,6 +13,5 @@ public enum Orientation {
         }else {
             return '3';
         }
-
     }
 }

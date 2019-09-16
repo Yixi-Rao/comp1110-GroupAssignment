@@ -1,7 +1,7 @@
 package comp1110.ass2;
 
+import java.util.HashSet;
 import java.util.Set;
-
 /**
  * This class provides the text interface for the IQ Focus Game
  * <p>
@@ -9,7 +9,22 @@ import java.util.Set;
  * (https://www.smartgames.eu/uk/one-player-games/iq-focus)
  */
 public class FocusGame {
-    
+
+    public static Colours[][] gameStatesColour = new Colours[5][9];
+
+    public static Piece[][] pieces = new Piece[5][9];
+
+    public static final Location[] centralLocation = {new Location(3,1),new Location(4,1),new Location(5,1),
+                                                        new Location(3,2),new Location(4,2),new Location(5,2),
+                                                        new Location(3,3),new Location(4,3),new Location(5,3)};
+    public static final String[] types = {"a","b","c","d","e","f","g","h","i","j"};
+
+    private static final String[] orientations = {"0","1","2","3"};
+
+    private static final int[] Xrange = {0,1,2,3,4,5,6,7,8};
+
+    private static final int[] Yrange = {0,1,2,3,4};
+
 
     /**
      * Determine whether a piece placement is well-formed according to the
@@ -28,11 +43,11 @@ public class FocusGame {
             return false;
         if ( !((int)'a' <= piecePlacement.charAt(0) && piecePlacement.charAt(0) <= (int)'j'))
             return false;
-        if (!(0 <= Integer.parseInt(piecePlacement.substring(1,2)) && Integer.parseInt(piecePlacement.substring(1,2)) <= 8 ))
+        if (!((int)'0' <= piecePlacement.charAt(1) && piecePlacement.charAt(1) <= (int)'8'))
             return false;
-        if (!(0 <= Integer.parseInt(piecePlacement.substring(2,3)) && Integer.parseInt(piecePlacement.substring(2,3)) <= 4 ))
+        if (!((int)'0' <= piecePlacement.charAt(2) && piecePlacement.charAt(2) <= (int)'4'))
             return false;
-        if (!(0 <= Integer.parseInt(piecePlacement.substring(3,4)) && Integer.parseInt(piecePlacement.substring(3,4)) <= 3 ))
+        if (!((int)'0' <= piecePlacement.charAt(3) && piecePlacement.charAt(3) <= (int)'3'))
             return false;
 
         // FIXME Task 2: determine whether a piece placement is well-formed
@@ -49,8 +64,26 @@ public class FocusGame {
      * @return True if the placement is well-formed
      */
     public static boolean isPlacementStringWellFormed(String placement) {
+        if (placement.length() % 4 != 0 || (4 > placement.length() || placement.length() > 40)){
+            return false;}
+
+        String type = "";
+        for (int i = 0;i < placement.length()/4;i++) {
+            String piece = placement.substring(4 * i, 4 + (4 * i));
+            if (!isPiecePlacementWellFormed(piece))
+                return false;
+            type = type + piece.charAt(0);
+        }
+        for (int i = 0;i < type.length();i++) {
+            String first = ""+type.charAt(i);
+            type = type.replace(type.charAt(i)+"","@");
+            if (type.contains(""+first))
+                return false;
+        }
         // FIXME Task 3: determine whether a placement is well-formed
-        return false;
+        return true;
+
+
     }
 
     /**
@@ -67,9 +100,73 @@ public class FocusGame {
      * @return True if the placement sequence is valid
      */
     public static boolean isPlacementStringValid(String placement) {
+        if (!isPlacementStringWellFormed(placement)){
+            return false;}
+        for (int i = 0;i < placement.length()/4;i++) {
+            String subpiece = placement.substring(4 * i, 4 + (4 * i));
+            if (!isPieceOnBoard(subpiece)){
+                pieces = new Piece[5][9];
+                return false;}
+            if (isPieceOverlap(subpiece)){
+                pieces = new Piece[5][9];
+                return false;}
+            addPiece(new Piece(subpiece));
+        }
+        pieces = new Piece[5][9];
         // FIXME Task 5: determine whether a placement string is valid
+        return true;
+    }
+    public static boolean isPieceOnBoard(String piece){
+        Piece piece1 = new Piece(piece);
+        int x = piece1.getLocation().getX();
+        int y = piece1.getLocation().getY();
+        PiecesType type = piece1.getPiecesType();
+        Orientation orientation = piece1.getOrientation();
+        Location[] locations = type.createPiece(x,y,orientation);
+
+        for (Location l:locations){
+            if (l.getX() < 0 || l.getX() > 8)
+                return false;
+            if (l.getY() < 0 || l.getY() > 4)
+                return false;
+            if ((l.getX() == 0 && l.getY() == 4) ||(l.getX() == 8 && l.getY() == 4))
+                return false;
+        }
+        return true;
+    }
+
+    public static boolean isPieceOverlap(String piece) {
+        Piece piece2 = new Piece(piece);
+        int x = piece2.getLocation().getX();
+        int y = piece2.getLocation().getY();
+        PiecesType type = piece2.getPiecesType();
+        Orientation orientation = piece2.getOrientation();
+        Location[] locations = type.createPiece(x,y,orientation);
+
+        for (Location l:locations){
+            if (pieces[l.getY()][l.getX()] != null)
+                return true;
+        }
         return false;
     }
+
+    public static void addPiece(Piece piece){
+        Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
+        for (Location l:locations){
+            pieces[l.getY()][l.getX()] = piece;
+
+        }
+    }
+
+    public static void addColour(Piece piece){
+        Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
+        Colours[] colours = piece.getColous();
+        for (int i = 0;i < locations.length;i++){
+            gameStatesColour[locations[i].getY()][locations[i].getX()] = colours[i];
+        }
+    }
+
+
 
     /**
      * Given a string describing a placement of pieces and a string describing
@@ -97,8 +194,53 @@ public class FocusGame {
      * @return A set of viable piece placements, or null if there are none.
      */
     static Set<String> getViablePiecePlacements(String placement, String challenge, int col, int row) {
-        // FIXME Task 6: determine the set of all viable piece placements given existing placements and a challenge
-        return null;
+        setChallenge(challenge);
+        Set<String> result = new HashSet<>();
+        for (int x:Xrange){
+            for (int y:Yrange){
+                for (String type:types){
+                    for (String orientation:orientations){
+                        //System.out.println(placement +type + "" + col + "" + row + "" + orientation+" , " + isPlacementStringValid(placement + type + "" + col + "" + row + "" + orientation)  );
+                        if (isPlacementStringValid(placement + type + "" + x + "" + y + "" + orientation) && isValidColour(new Piece(type + "" + x + "" + y + "" + orientation)) && isOccupyGrid(col,row,new Piece(type + "" + x + "" + y + "" + orientation))) {
+                            result.add(type + "" + x + "" + y + "" + orientation);
+                        }
+                    }
+                }
+            }
+        }
+
+        gameStatesColour = new Colours[5][9];
+        if (result.isEmpty())
+            return null;
+        return result;
+    }// FIXME Task 6: determine the set of all viable piece placements given existing placements and a challenge
+
+    public static void setChallenge(String challenge){
+        for (int i = 0 ;i<challenge.length();i++){
+            gameStatesColour[centralLocation[i].getY()][centralLocation[i].getX()] = Colours.toColour(challenge.charAt(i));
+        }
+    }
+
+    public static Boolean isValidColour(Piece piece){
+        Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
+        Colours[] colours = piece.getColous();
+        for (int i = 0;i < locations.length;i++){
+            //System.out.println(locations.length+","+i);
+            if (gameStatesColour[locations[i].getY()][locations[i].getX()] != null && gameStatesColour[locations[i].getY()][locations[i].getX()] != colours[i]){
+                //System.out.println(locations[i].getY()+","+locations[i].getX()+","+colours[i]);
+                return false;}
+        }
+        return true;
+    }
+
+    public  static Boolean isOccupyGrid(int col,int row,Piece piece){
+        Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
+        Location want = new Location(col,row);
+        for (Location l:locations){
+            if (l.equals(want))
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -121,4 +263,31 @@ public class FocusGame {
         // FIXME Task 9: determine the solution to the game, given a particular challenge
         return null;
     }
+
+    public static void main(String[] args) {
+        //Set<String> strings = new HashSet<>(getViablePiecePlacements("j001","RRRRRWRWW",0,2));
+        //System.out.println(strings);
+         //System.out.println(isPlacementStringValid("j001f021"));;
+       // System.out.println(isValidColour(new Piece("b022")));
+        /*
+        for (String s:strings){
+
+            System.out.println(s);
+
+        }*/
+
+    }
 }
+//[e003, c002, e001, a000, c001, e002, g003, g002, e000, g001, g000, i000, i001, i002, i003, a001, a002, c003, a003, d002, d003, b001, d000, f003, b000, d001, f002, f001, f000, j000, j001, h000, h001, j003, h002, h003, b003, b002]
+//[a000, a003, b001, b003, c001, c002, d000, d002, d003, e000, e001, e003, f000, f001, f002, f003, g000, g002, h000, h001, h003, i000, i002, i003, j000, j001, j003]
+
+// a000, a003,-------a000, a001, a002, a003
+// b001, b003,-------b000, b001, b002, b003,
+// c001, c002,-------c001, c002, c003,
+// d000, d002, d003,------- d000, d001, d002, d003,
+// e000, e001, e003, -------e000, e001, e002, e003
+// f000, f001, f002, f003,-------f000, f001, f002, f003
+// g000, g002,-------g000, g001, g002, g003,
+// h000, h001, h003,-------h000, h001, h002, h003
+// i000, i002, i003-------i000, i001, i002, i003
+// j000, j001, j003-------j000, j001, j003
