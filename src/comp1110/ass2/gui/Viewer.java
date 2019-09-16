@@ -2,8 +2,6 @@ package comp1110.ass2.gui;
 
 //import com.sun.glass.ui.View;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,9 +15,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,11 +37,11 @@ public class Viewer extends Application {
     private static final double EX_FRAME_Y = SQUARE_SIZE;
     private static final double EX_FRAME_LEN_X = SQUARE_SIZE * 9.0;
     private static final double EX_FRAME_LEN_Y = SQUARE_SIZE * 5.0;
-    private static final int EX_FRAME_STROKE = 2;
-    private static final Color EX_FRAME_COLOR = Color.BLACK;
-    private static final Color EX_FRAME_FILL = Color.LIGHTGREY;
+    private static final int EX_FRAME_STROKE = 2; //
+    private static final Color EX_FRAME_COLOR = Color.BLACK; // colour of the frame line
+    private static final Color EX_FRAME_FILL = Color.TRANSPARENT; // colour inside the box
 
-    // Internal frame line of the game area
+    // Internal frame line of the game area (red line)
     private static final double IN_FRAME_X = EX_FRAME_X + SQUARE_SIZE * 3.0;
     private static final double IN_FRAME_Y = EX_FRAME_Y + SQUARE_SIZE * 1.0;
     private static final double IN_FRAME_LEN_X = SQUARE_SIZE * 3.0;
@@ -114,7 +110,7 @@ public class Viewer extends Application {
         layouts.getChildren().add(internalFrame);
 
         // Draw horizontal checker lines inside game area
-        double endX = EX_FRAME_X + EX_FRAME_LEN_X;
+        double endX = EX_FRAME_X + EX_FRAME_LEN_X; // end line x
         for (int index = 1; index < 5; index++) {
             double y = EX_FRAME_Y + SQUARE_SIZE * index;
             Line line = drawLine(EX_FRAME_X, y, endX, y);
@@ -146,14 +142,16 @@ public class Viewer extends Application {
                 int pieceY = Integer.parseInt(piece.substring(2, 3));
                 int pieceOri = Integer.parseInt(piece.substring(3));
 
-                double pieceWidth = pieceSizes.get(pieceName)[0];
-                double pieceHeight = pieceSizes.get(pieceName)[1];
+                double pieceWidth = pieceSizes.get(pieceName)[0]; // the width of the piece
+                double pieceHeight = pieceSizes.get(pieceName)[1]; // the Height of the piece
 
-                double pieceStartX = EX_FRAME_X + SQUARE_SIZE * pieceX;
-                double pieceStartY = EX_FRAME_Y + SQUARE_SIZE * pieceY;
-                if (pieceOri % 2 == 1) { // Spherical Coordinate Transform
+                double pieceStartX = EX_FRAME_X + SQUARE_SIZE * pieceX; // 90 + 60 * x
+                double pieceStartY = EX_FRAME_Y + SQUARE_SIZE * pieceY; // 60 + 60 * y
+                if (pieceOri % 2 == 1) { // Spherical Coordinate Transform (when pieceOri == 1 or 3)
                     pieceStartX -= (pieceWidth - pieceHeight) / 2.0;
+                    System.out.println(pieceStartX);
                     pieceStartY += (pieceWidth - pieceHeight) / 2.0;
+                    System.out.println(pieceStartY);
                 }
 
                 String piecePath = Viewer.class.getResource(URI_BASE + pieceName + ".png").toString();
@@ -177,7 +175,7 @@ public class Viewer extends Application {
     private void makeControls() {
         Label label1 = new Label("Placement:");
         textField = new TextField();
-        textField.setPrefWidth(300);
+        textField.setPrefWidth(300); // length of the textbox
         Button button = new Button("Refresh");
         button.setOnAction(event -> {
             makePlacement(textField.getText());

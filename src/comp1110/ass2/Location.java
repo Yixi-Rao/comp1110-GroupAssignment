@@ -14,4 +14,14 @@ public class Location {
     public int getY() {
         return Y;
     }
+
+    public boolean equals(Location location){
+       return this.X == location.X && this.Y == location.Y;
+    }
+
+    public static void main(String[] args) {
+        Location l1 = new Location(1,2);
+        Location l2 = new Location(1,2);
+        System.out.println(l1.equals(l2));
+    }
 }

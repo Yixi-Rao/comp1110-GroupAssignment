@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import java.util.HashSet;
 import java.util.Set;
 /**
  * This class provides the text interface for the IQ Focus Game
@@ -9,15 +10,20 @@ import java.util.Set;
  */
 public class FocusGame {
 
-    public Colours[][] gameStates = {
-            {null,null,null,null,null,null,null,null,null},
-            {null,null,null,null,null,null,null,null,null},
-            {null,null,null,null,null,null,null,null,null},
-            {null,null,null,null,null,null,null,null,null},
-            {null,null,null,null,null,null,null,null,null}
-    };
+    public static Colours[][] gameStatesColour = new Colours[5][9];
 
     public static Piece[][] pieces = new Piece[5][9];
+
+    public static final Location[] centralLocation = {new Location(3,1),new Location(4,1),new Location(5,1),
+                                                        new Location(3,2),new Location(4,2),new Location(5,2),
+                                                        new Location(3,3),new Location(4,3),new Location(5,3)};
+    public static final String[] types = {"a","b","c","d","e","f","g","h","i","j"};
+
+    private static final String[] orientations = {"0","1","2","3"};
+
+    private static final int[] Xrange = {0,1,2,3,4,5,6,7,8};
+
+    private static final int[] Yrange = {0,1,2,3,4};
 
 
     /**
@@ -152,6 +158,14 @@ public class FocusGame {
         }
     }
 
+    public static void addColour(Piece piece){
+        Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
+        Colours[] colours = piece.getColous();
+        for (int i = 0;i < locations.length;i++){
+            gameStatesColour[locations[i].getY()][locations[i].getX()] = colours[i];
+        }
+    }
+
 
 
     /**
@@ -180,8 +194,53 @@ public class FocusGame {
      * @return A set of viable piece placements, or null if there are none.
      */
     static Set<String> getViablePiecePlacements(String placement, String challenge, int col, int row) {
-        // FIXME Task 6: determine the set of all viable piece placements given existing placements and a challenge
-        return null;
+        setChallenge(challenge);
+        Set<String> result = new HashSet<>();
+        for (int x:Xrange){
+            for (int y:Yrange){
+                for (String type:types){
+                    for (String orientation:orientations){
+                        //System.out.println(placement +type + "" + col + "" + row + "" + orientation+" , " + isPlacementStringValid(placement + type + "" + col + "" + row + "" + orientation)  );
+                        if (isPlacementStringValid(placement + type + "" + x + "" + y + "" + orientation) && isValidColour(new Piece(type + "" + x + "" + y + "" + orientation)) && isOccupyGrid(col,row,new Piece(type + "" + x + "" + y + "" + orientation))) {
+                            result.add(type + "" + x + "" + y + "" + orientation);
+                        }
+                    }
+                }
+            }
+        }
+
+        gameStatesColour = new Colours[5][9];
+        if (result.isEmpty())
+            return null;
+        return result;
+    }// FIXME Task 6: determine the set of all viable piece placements given existing placements and a challenge
+
+    public static void setChallenge(String challenge){
+        for (int i = 0 ;i<challenge.length();i++){
+            gameStatesColour[centralLocation[i].getY()][centralLocation[i].getX()] = Colours.toColour(challenge.charAt(i));
+        }
+    }
+
+    public static Boolean isValidColour(Piece piece){
+        Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
+        Colours[] colours = piece.getColous();
+        for (int i = 0;i < locations.length;i++){
+            //System.out.println(locations.length+","+i);
+            if (gameStatesColour[locations[i].getY()][locations[i].getX()] != null && gameStatesColour[locations[i].getY()][locations[i].getX()] != colours[i]){
+                //System.out.println(locations[i].getY()+","+locations[i].getX()+","+colours[i]);
+                return false;}
+        }
+        return true;
+    }
+
+    public  static Boolean isOccupyGrid(int col,int row,Piece piece){
+        Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
+        Location want = new Location(col,row);
+        for (Location l:locations){
+            if (l.equals(want))
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -206,5 +265,29 @@ public class FocusGame {
     }
 
     public static void main(String[] args) {
+        //Set<String> strings = new HashSet<>(getViablePiecePlacements("j001","RRRRRWRWW",0,2));
+        //System.out.println(strings);
+         //System.out.println(isPlacementStringValid("j001f021"));;
+       // System.out.println(isValidColour(new Piece("b022")));
+        /*
+        for (String s:strings){
+
+            System.out.println(s);
+
+        }*/
+
     }
 }
+//[e003, c002, e001, a000, c001, e002, g003, g002, e000, g001, g000, i000, i001, i002, i003, a001, a002, c003, a003, d002, d003, b001, d000, f003, b000, d001, f002, f001, f000, j000, j001, h000, h001, j003, h002, h003, b003, b002]
+//[a000, a003, b001, b003, c001, c002, d000, d002, d003, e000, e001, e003, f000, f001, f002, f003, g000, g002, h000, h001, h003, i000, i002, i003, j000, j001, j003]
+
+// a000, a003,-------a000, a001, a002, a003
+// b001, b003,-------b000, b001, b002, b003,
+// c001, c002,-------c001, c002, c003,
+// d000, d002, d003,------- d000, d001, d002, d003,
+// e000, e001, e003, -------e000, e001, e002, e003
+// f000, f001, f002, f003,-------f000, f001, f002, f003
+// g000, g002,-------g000, g001, g002, g003,
+// h000, h001, h003,-------h000, h001, h002, h003
+// i000, i002, i003-------i000, i001, i002, i003
+// j000, j001, j003-------j000, j001, j003
