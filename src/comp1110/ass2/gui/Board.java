@@ -1,6 +1,11 @@
 package comp1110.ass2.gui;
 
 import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Board extends Application {
@@ -16,8 +21,15 @@ public class Board extends Application {
 
     // FIXME Task 11: Generate interesting challenges (each challenge may have just one solution)
 
+
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.setTitle("Focus Game");
+        Group root = new Group();
+        Scene scene = new Scene(root, BOARD_WIDTH , BOARD_HEIGHT);
 
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
