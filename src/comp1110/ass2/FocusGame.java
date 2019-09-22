@@ -265,6 +265,10 @@ public class FocusGame {
     }
 
     public static void main(String[] args) {
+        int a = 'b' - 'a';
+        System.out.println(a);
+
+        System.out.println((char)(a+'a')+"");
         //Set<String> strings = new HashSet<>(getViablePiecePlacements("j001","RRRRRWRWW",0,2));
         //System.out.println(strings);
          //System.out.println(isPlacementStringValid("j001f021"));;
