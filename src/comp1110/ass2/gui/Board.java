@@ -30,7 +30,7 @@ public class Board extends Application {
 
     private static final long ROTATION_THRESHOLD = 50;
 
-    public static final String NOT_PLACED = null;
+    public static final String NOT_PLACED = "";
 
     private final Map<String, double[]> pieceSizes = new HashMap<>() {{
         put("a", new double[] {43 * 3, 43 * 2});
@@ -141,7 +141,7 @@ public class Board extends Application {
          */
         private void snapToGrid() {
 
-            if (onBoard()&&validPiece()) {
+            if (onBoard()) {
                 if ((getLayoutX() >= (PLAY_AREA_X - (SQUARE_SIZE / 2))) && (getLayoutX() < (PLAY_AREA_X + (SQUARE_SIZE / 2)))) {
                     setLayoutX(PLAY_AREA_X);
                 } else if ((getLayoutX() >= PLAY_AREA_X + (SQUARE_SIZE / 2)) && (getLayoutX() < PLAY_AREA_X + 1.5 * SQUARE_SIZE)) {
@@ -173,7 +173,11 @@ public class Board extends Application {
                 }else if ((getLayoutY() >= PLAY_AREA_Y + 3.5 * SQUARE_SIZE) && (getLayoutY() < PLAY_AREA_Y + 4.5 * SQUARE_SIZE)) {
                     setLayoutY(PLAY_AREA_Y + 4 * SQUARE_SIZE);
                 }
-                setPosition();//分别判断要设定的xy位置
+                setPosition();
+                if (!validPiece()){
+                    System.out.println(validPiece());
+                    snapToHome();}
+                    //分别判断要设定的xy位置
             } else {
                 snapToHome();
             }
@@ -199,6 +203,9 @@ public class Board extends Application {
             for (String p:pieceState){
                 placement = placement + p;
             }
+            System.out.println(placement);
+            if (placement.equals(""))
+                return true;
             return FocusGame.isPlacementStringValid(placement);
         }
 
@@ -209,10 +216,11 @@ public class Board extends Application {
             orientation = (orientation + 1) % 4; // 这里orientation进行递归
             setImage(images[(orientation)]);
             rotateSetFit(orientation);
-            //根据不同的方向进行调整setFitHeight(pieceSizes.get(piece+"")[1]);
-            //            setFitWidth(pieceSizes.get(piece+"")[0]);
             toFront();
             setPosition();
+            if (!validPiece()){
+                System.out.println(validPiece());
+                snapToHome();}
         }
 
         private void rotateSetFit(int orientation) {
@@ -249,7 +257,6 @@ public class Board extends Application {
             if (x < 0)//代表在home位置
                 pieceState[pieceID] = NOT_PLACED;
             else {
-
                 pieceState[pieceID] = ((char)(pieceID+'a')+"") + x + "" + y + "" + orientation;
             }
         }
