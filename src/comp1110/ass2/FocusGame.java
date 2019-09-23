@@ -19,7 +19,7 @@ public class FocusGame {
                                                         new Location(3,3),new Location(4,3),new Location(5,3)};
     public static final String[] types = {"a","b","c","d","e","f","g","h","i","j"};
 
-    private static final String[] orientations = {"0","1","2","3"};
+    public static final String[] orientations = {"0","1","2","3"};
 
     private static final int[] Xrange = {0,1,2,3,4,5,6,7,8};
 
