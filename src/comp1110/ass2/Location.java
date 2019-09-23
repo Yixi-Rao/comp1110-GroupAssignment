@@ -24,4 +24,10 @@ public class Location {
         Location l2 = new Location(1,2);
         System.out.println(l1.equals(l2));
     }
+
+    @Override
+    public String toString() {
+        return "(" + this.getX() + "," + this.getY() +")";
+    }
+
 }

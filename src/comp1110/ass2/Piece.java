@@ -69,6 +69,9 @@ public class Piece {
         return new Location(x,y);
     }
 
+
+
+
     public static void main(String[] args) {
         Piece p = new Piece("a001");
         System.out.println(PiecesType.valueOf(Character.toString('b' - 32)));
