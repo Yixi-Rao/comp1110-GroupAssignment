@@ -99,28 +99,28 @@ public class Board extends Application {
             this.id = piece;
             for (int i = 0; i < 4; i++) {
                 char idx = (char) (i + '0');
-                images[i] = new Image(Board.class.getResource(URI_BASE + piece + "-" + idx + ".png").toString());
-                setImage(images[0]);
-                orientation = 0;
-                pieceState[piece - 'a'] = NOT_PLACED;
-                homeX = MARGIN_X + ((piece - 'a') % 2) * SQUARE_SIZE * 4;
-                setLayoutX(homeX);
-                homeY = MARGIN_Y + (((piece - 'a') / 2) % 5) * SQUARE_SIZE * 3;
-                setLayoutY(homeY);
+                images[i] = new Image(Board.class.getResource(URI_BASE + piece + "-" + idx + ".png").toString());}
+            setImage(images[0]);
+            orientation = 0;
+            pieceState[piece - 'a'] = NOT_PLACED;
+            homeX = MARGIN_X + ((piece - 'a') % 2) * SQUARE_SIZE * 4;
+            setLayoutX(homeX);
+            homeY = MARGIN_Y + (((piece - 'a') / 2) % 5) * SQUARE_SIZE * 3;
+            setLayoutY(homeY);
 
                 /* event handlers */
-                setOnScroll(event -> {            // scroll to change orientation
+            setOnScroll(event -> {            // scroll to change orientation
                     if (System.currentTimeMillis() - lastRotationTime > ROTATION_THRESHOLD){
                         lastRotationTime = System.currentTimeMillis();
                         rotate();
                         event.consume();
                     }
                 });
-                setOnMousePressed(event -> {      // mouse press indicates begin of drag
+            setOnMousePressed(event -> {      // mouse press indicates begin of drag
                     mouseX = event.getSceneX();//Returns horizontal position of the event
                     mouseY = event.getSceneY();
                 });
-                setOnMouseDragged(event -> {      // mouse is being dragged
+            setOnMouseDragged(event -> {      // mouse is being dragged
                     toFront();
                     double movementX = event.getSceneX() - mouseX;//位移
                     double movementY = event.getSceneY() - mouseY;
@@ -130,14 +130,14 @@ public class Board extends Application {
                     mouseY = event.getSceneY();
                     event.consume();
                 });
-                setOnMouseReleased(event -> {     // drag is complete
+            setOnMouseReleased(event -> {     // drag is complete
                     snapToGrid();
                 });
-            }
+
         }
 
         /**
-         * Snap the tile to the nearest grid position (if it is over the grid)
+         * Snap the piece to the nearest grid position (if it is over the grid)
          */
         private void snapToGrid() {
 
