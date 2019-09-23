@@ -15,7 +15,7 @@ public class PieceTest {
 
     public void test2(String placement,Location loc){
         Location out = Piece.pieceToLocation(placement);
-        assertTrue("Input was'" + placement + "', expected " + loc + "but got" + out, loc == out);
+        assertTrue("Input was'" + placement + "', expected " + loc + "but got" + out, loc.equals(out));
 
     }
 
