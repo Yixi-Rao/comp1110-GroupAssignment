@@ -61,14 +61,14 @@ public class Board extends Application {
 
     private String[] pieceState = new String[10];
 
-    /* Graphical representations of tiles */
+    /* Graphical representations of pieces */
     class GPiece extends ImageView {
         int pieceID;
 
         /**
-         * Construct a particular playing tile
+         * Construct a particular playing piece
          *
-         * @param piece The letter representing the tile to be created.
+         * @param piece The letter representing the piece to be created.
          */
         GPiece(char piece) {
             if (piece > 'j' || piece < 'a') {
@@ -82,7 +82,7 @@ public class Board extends Application {
     }
 
     class DraggablePiece extends GPiece {
-        int homeX, homeY;                                     // the position in the window where the tile should be when not on the board
+        int homeX, homeY;                                     // the position in the window where the piece should be when not on the board
         double mouseX, mouseY;                               // the last known mouse positions (used when dragging)
         Image[] images = new Image[4];
         int orientation;                                     // 0=North... 3=West
@@ -183,7 +183,7 @@ public class Board extends Application {
             }
         }
         /**
-         * @return true if the tile is on the board
+         * @return true if the piece is on the board
          */
         private boolean onBoard() {
             return getLayoutX() > (PLAY_AREA_X - (SQUARE_SIZE / 2)) && (getLayoutX() < (PLAY_AREA_X + 8.5 * SQUARE_SIZE))
@@ -193,9 +193,9 @@ public class Board extends Application {
 
         /**
          * a function to check whether the current destination cell
-         * is already occupied by another tile
+         * is already occupied by another piece
          *
-         * @return true if the destination cell for the current tile
+         * @return true if the destination cell for the current piece
          * is already occupied, and false otherwise
          */
         private boolean validPiece() {
@@ -210,7 +210,7 @@ public class Board extends Application {
         }
 
         /**
-         * Rotate the tile by 90 degrees and update any relevant state
+         * Rotate the piece by 90 degrees and update any relevant state
          */
         private void rotate() {
             orientation = (orientation + 1) % 4; // recursion of orientation starts here
@@ -235,7 +235,7 @@ public class Board extends Application {
 
 
         /**
-         * Snap the tile to its home position (if it is not on the grid)
+         * Snap the piece to its home position (if it is not on the grid)
          */
         private void snapToHome() {
             setLayoutX(homeX);
@@ -248,7 +248,7 @@ public class Board extends Application {
         }
 
         /**
-         * Determine the grid-position of the origin of the tile
+         * Determine the grid-position of the origin of the piece
          * or 'NOT_PLACED' if it is off the grid, taking into account its rotation.
          */
         private void setPosition() {
@@ -280,7 +280,7 @@ public class Board extends Application {
     }
 
     /**
-     * Set up each of the six tiles
+     * Set up each of the six pieces
      */
     private void makePieces() {
         gpieces.getChildren().clear();
@@ -290,7 +290,7 @@ public class Board extends Application {
     }
 
     /**
-     * Put all of the tiles back in their home position
+     * Put all of the pieces back in their home position
      */
     private void resetPieces() {
         gpieces.toFront();
