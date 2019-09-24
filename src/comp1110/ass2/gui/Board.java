@@ -177,7 +177,7 @@ public class Board extends Application {
                 if (!validPiece()){
                     System.out.println(validPiece());
                     snapToHome();}
-                    //分别判断要设定的xy位置
+                    //decide x and y position
             } else {
                 snapToHome();
             }
@@ -188,7 +188,7 @@ public class Board extends Application {
         private boolean onBoard() {
             return getLayoutX() > (PLAY_AREA_X - (SQUARE_SIZE / 2)) && (getLayoutX() < (PLAY_AREA_X + 8.5 * SQUARE_SIZE))
                     && getLayoutY() > (PLAY_AREA_Y - (SQUARE_SIZE / 2)) && (getLayoutY() < (PLAY_AREA_Y + 4.5 * SQUARE_SIZE));
-        }//利用getLayoutX得到piecs坐标，来判断是否在棋盘可允许区域
+        }//use function getLayoutX to get piece's location to decide whether it is available in the board
 
 
         /**
@@ -254,7 +254,7 @@ public class Board extends Application {
         private void setPosition() {
             int x = (int) (getLayoutX() - PLAY_AREA_X) / SQUARE_SIZE;//棋盘坐标x（0-4）
             int y = (int) (getLayoutY() - PLAY_AREA_Y) / SQUARE_SIZE;//棋盘坐标y（0-3）
-            if (x < 0)//代表在home位置
+            if (x < 0)// home position
                 pieceState[pieceID] = NOT_PLACED;
             else {
                 pieceState[pieceID] = ((char)(pieceID+'a')+"") + x + "" + y + "" + orientation;
