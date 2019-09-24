@@ -61,7 +61,7 @@ public class Board extends Application {
 
     private String[] pieceState = new String[10];
 
-    /* Graphical representations of tiles */
+    /* Graphical representations of pieces */
     class GPiece extends ImageView {
         int pieceID;
 
