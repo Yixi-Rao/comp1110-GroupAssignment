@@ -252,8 +252,8 @@ public class Board extends Application {
          * or 'NOT_PLACED' if it is off the grid, taking into account its rotation.
          */
         private void setPosition() {
-            int x = (int) (getLayoutX() - PLAY_AREA_X) / SQUARE_SIZE;//coordinate x（0-4）
-            int y = (int) (getLayoutY() - PLAY_AREA_Y) / SQUARE_SIZE;//coordinate y（0-3）
+            int x = (int) (getLayoutX() - PLAY_AREA_X) / SQUARE_SIZE;//coordinate x（0-8）
+            int y = (int) (getLayoutY() - PLAY_AREA_Y) / SQUARE_SIZE;//coordinate y（0-4）
             if (x < 0)// home position
                 pieceState[pieceID] = NOT_PLACED;
             else {
