@@ -122,7 +122,7 @@ public class Board extends Application {
                 });
             setOnMouseDragged(event -> {      // mouse is being dragged
                     toFront();
-                    double movementX = event.getSceneX() - mouseX;//位移
+                    double movementX = event.getSceneX() - mouseX;//move
                     double movementY = event.getSceneY() - mouseY;
                     setLayoutX(getLayoutX() + movementX);
                     setLayoutY(getLayoutY() + movementY);
@@ -213,7 +213,7 @@ public class Board extends Application {
          * Rotate the tile by 90 degrees and update any relevant state
          */
         private void rotate() {
-            orientation = (orientation + 1) % 4; // 这里orientation进行递归
+            orientation = (orientation + 1) % 4; // recursion of orientation starts here
             setImage(images[(orientation)]);
             rotateSetFit(orientation);
             toFront();
@@ -252,8 +252,8 @@ public class Board extends Application {
          * or 'NOT_PLACED' if it is off the grid, taking into account its rotation.
          */
         private void setPosition() {
-            int x = (int) (getLayoutX() - PLAY_AREA_X) / SQUARE_SIZE;//棋盘坐标x（0-4）
-            int y = (int) (getLayoutY() - PLAY_AREA_Y) / SQUARE_SIZE;//棋盘坐标y（0-3）
+            int x = (int) (getLayoutX() - PLAY_AREA_X) / SQUARE_SIZE;//coordinate x（0-4）
+            int y = (int) (getLayoutY() - PLAY_AREA_Y) / SQUARE_SIZE;//coordinate y（0-3）
             if (x < 0)// home position
                 pieceState[pieceID] = NOT_PLACED;
             else {
@@ -346,7 +346,7 @@ public class Board extends Application {
         root.getChildren().add(gpieces);
         root.getChildren().add(Chess);
 
-        makeChess();//放置board
+        makeChess();//place a board
 
         newGame();
 
