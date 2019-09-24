@@ -33,7 +33,7 @@ public class Board extends Application {
     public static final String NOT_PLACED = "";
 
     private final Map<String, double[]> pieceSizes = new HashMap<>() {{
-        put("a", new double[] {43 * 3, 43 * 2});
+        put("a", new double[] {43 * 3.0, 43 * 2.0});
         put("b", new double[] {43 * 4.0, 43 * 2.0});
         put("c", new double[] {43 * 4.0, 43 * 2.0});
         put("d", new double[] {43 * 3.0, 43 * 2.0});
@@ -285,7 +285,7 @@ public class Board extends Application {
     private void makePieces() {
         gpieces.getChildren().clear();
         for (char m = 'a'; m <= 'j'; m++) {
-            gpieces.getChildren().add(new DraggablePiece(m));
+            gpieces.getChildren().add(new DraggablePiece(m));//make all the pieces draggable
         }
     }
 
@@ -295,7 +295,7 @@ public class Board extends Application {
     private void resetPieces() {
         gpieces.toFront();
         for (Node n : gpieces.getChildren()) {
-            ((DraggablePiece) n).snapToHome();
+            ((DraggablePiece) n).snapToHome();// put all the pieces back to home
         }
     }
 

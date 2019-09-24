@@ -17,7 +17,7 @@ public class OrientationTest {
         assertEquals('2', Orientation.SOUTH.toChar());
         assertEquals('3', Orientation.WEST.toChar());
 
-    }
+    } // test orientation of all pieces
 
 
 
