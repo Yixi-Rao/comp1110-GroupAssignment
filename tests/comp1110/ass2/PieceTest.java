@@ -21,6 +21,7 @@ public class PieceTest {
 
 
 
+
     @Test
     public void testPlacementToOrientation(){
         test("a000",Orientation.NORTH);
