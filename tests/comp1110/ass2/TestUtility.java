@@ -7,7 +7,7 @@ public class TestUtility {
 
     static final Solution[] SOLUTIONS = {
             new Solution("RRRBWBBRB",
-                    "a000b013c113d302e323f400g420h522i613j701"),
+                    "a000b013c113d302e323f400g420h522i613j701"),//1
             new Solution("RWWRRRWWW",
                     "a701b400c410d303e111f330g030h000i733j332"),
             new Solution("BGGWGGRWB",
@@ -25,7 +25,7 @@ public class TestUtility {
             new Solution("RGGGGRBGG",
                     "a200b230c430d711e600f011g000h503i133j112"),
             new Solution("BBBWRWGGG",
-                    "a630b130c330d002e020f100g301h601i502j412"),
+                    "a630b130c330d002e020f100g301h601i502j412"),//10
             new Solution("WBWWWWRWG",
                     "a500b012c703d232e000f320g300h522i030j322"),
             new Solution("BBGRWBRRB",
@@ -45,7 +45,7 @@ public class TestUtility {
             new Solution("GWRGGWGGG",
                     "a403b130c330d002e020f520g500h101i630j701"),
             new Solution("WWRGWRWWR",
-                    "a221b300c613d513e100f421g030h003i531j701"),
+                    "a221b300c613d513e100f421g030h003i531j701"),//20
             new Solution("WWRGGWGGW",
                     "a403b332c703d621e111f500g030h000i511j303"),
             new Solution("RBGWBBGWR",
@@ -65,7 +65,7 @@ public class TestUtility {
             new Solution("BWGGWGGWB",
                     "a000b513c613d400e013f411g201h323i131j701"),
             new Solution("WBWGGBWGW",
-                    "a221b301c430d600e713f011g511h001i400j113"),
+                    "a221b301c430d600e713f011g511h001i400j113"),//30 ------junior
             new Solution("GWGGWBGGG",
                     "a610b130c330d002e020f401g721h101i520j500"),
             new Solution("BGGWGGGWB",
@@ -85,7 +85,7 @@ public class TestUtility {
             new Solution("BBBBGGBGB",
                     "a622b412c002d532e302f011g111h601i221j132"),
             new Solution("BBBWWWBGB",
-                    "a600b122c001d532e101f520g400h612i302j132"),
+                    "a600b122c001d532e101f520g400h612i302j132"),//40
             new Solution("WGGBGGGBW",
                     "a010b413c130d600e713f000g211h301i022j613"),
             new Solution("GBGWWWBGB",
@@ -105,7 +105,7 @@ public class TestUtility {
             new Solution("RRRRRRRRR",
                     "a300b532c122d513e232f000g611h601i030j010"),
             new Solution("RRRRRWRWW",
-                    "a412b601c111d221e300f011g530h001i432j701"),
+                    "a412b601c111d221e300f011g530h001i432j701"),//50
             new Solution("RWWWRWWWR",
                     "a301b611c703d132e432f230g110h500i023j000"),
             new Solution("BWBBWBBBB",
@@ -125,7 +125,7 @@ public class TestUtility {
             new Solution("WBBWBWWBW",
                     "a021b532c601d300e701f321g310h000i433j111"),
             new Solution("BBBWWBBBB",
-                    "a030b102c613d432e402f120g420h000i231j701"),
+                    "a030b102c613d432e402f120g420h000i231j701"),//60
             new Solution("WGGWWGWWW",
                     "a111b013c002d400e701f311g620h222i632j411"),
             new Solution("GGGGWGWWG",
@@ -145,7 +145,7 @@ public class TestUtility {
             new Solution("WWWRRWWRR",
                     "a230b300c002d212e432f510g030h521i012j701"),
             new Solution("WGGGGGGGW",
-                    "a000b502c302d711e123f011g530h323i213j420"),
+                    "a000b502c302d711e123f011g530h323i213j420"),//70
             new Solution("WGGGGGWWW",
                     "a003b532c601d232e701f330g100h301i030j112"),
             new Solution("GGGGGGGGG",
@@ -165,7 +165,7 @@ public class TestUtility {
             new Solution("BGWWBGWWW",
                     "a000b320c302d121e013f340g530h511i210j701"),
             new Solution("GWBGGWWGG",
-                    "a600b213c430d711e003f520g030h101i502j403"),
+                    "a600b213c430d711e003f520g030h101i502j403"),//80
             new Solution("BGGBGBBGG",
                     "a123b230c430d711e512f011g000h201i211j500"),
             new Solution("GGRGGRRRR",
@@ -185,7 +185,7 @@ public class TestUtility {
             new Solution("GGGRRRWRW",
                     "a701b402c202d212e630f240g011h520i003j130"),
             new Solution("GRGWRRRWG",
-                    "a532b502c411d520e132f811g110h000i021j300"),
+                    "a532b502c411d520e132f811g110h000i021j300"),//90
             new Solution("RBRRBBRRB",
                     "a332b103c711d313e412f001g030h601i530j200"),
             new Solution("RRBWBRWWR",
@@ -205,7 +205,7 @@ public class TestUtility {
             new Solution("GGGBBGRBG",
                     "a630b402c202d432e220f011g000h123i701j520"),
             new Solution("GBGRRRBRB",
-                    "a332b202c711d320e003f100g030h601i222j511"),
+                    "a332b202c711d320e003f100g030h601i222j511"),//100
             new Solution("GBRGBRGGG",
                     "a500b422c703d020e403f000g030h323i631j002"),
             new Solution("GBWRBBRRG",
@@ -225,7 +225,7 @@ public class TestUtility {
             new Solution("RBBRBBRRR",
                     "a100b111c711d313e420f001g400h601i030j332"),
             new Solution("RWWBWWBBR",
-                    "a021b611c703d223e432f000g321h500i300j010"),
+                    "a021b611c703d223e432f000g321h500i300j010"),//110
             new Solution("RBBRWBRRB",
                     "a532b601c111d303e232f011g401h001i523j701"),
             new Solution("BBRRRRBBR",
@@ -244,7 +244,7 @@ public class TestUtility {
                     "a003b601c430d413e022f300g100h122i523j701"),
             new Solution("BWRBRWBWR",
                     "a412b100c332d003e022f140g500h522i313j701"),
-            new Solution("BRBBRBBWB",
+            new Solution("BRBBRBBWB",//120
                     "a021b102c502d223e411f811g611h000i333j432")
     };
 

@@ -1,12 +1,19 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Challenge;
 import comp1110.ass2.FocusGame;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
@@ -27,6 +34,10 @@ public class Board extends Application {
     private static final int BOARD_HEIGHT = 700;
     private static final int PLAY_AREA_Y = 269;
     private static final int PLAY_AREA_X = 484;
+
+    private static final int CHALLENGE_X = 626;
+    private static final int CHALLENGE_Y= 40;
+    private static final int CHALLENGE_SQUARE = 43;
 
     private static final long ROTATION_THRESHOLD = 50;
 
@@ -52,7 +63,7 @@ public class Board extends Application {
     private final Group Chess = new Group();
     private final Group controls = new Group();
     private final Group exposed = new Group();
-    private final Group objective = new Group();
+    private final Group challengeGroup = new Group();
 
 
     /* where to find media assets */
@@ -60,6 +71,9 @@ public class Board extends Application {
     private static final String BASEBOARD_URI = Board.class.getResource(URI_BASE + "board.png").toString();
 
     private String[] pieceState = new String[10];
+
+    /* the difficulty slider */
+    private final Slider difficulty = new Slider();//困难的滑块
 
     /* Graphical representations of pieces */
     class GPiece extends ImageView {
@@ -78,6 +92,42 @@ public class Board extends Application {
             setFitHeight(pieceSizes.get(piece+"")[1]);
             setFitWidth(pieceSizes.get(piece+"")[0]);
         }
+
+        /**
+         * A constructor used to build the challenge.
+         *
+         * @param challenge The challenge to be displayed (one of 120 objectives)
+         * @param x    The x position of the challenge
+         * @param y    The y position of the challenge
+         */
+        GPiece(int challenge,int index, int x, int y) {
+//            if (!(challenge <= 80 && challenge >= 1)) {
+//                throw new IllegalArgumentException("Bad challenge: \"" + challenge + "\"");
+//            }
+            String indexChallenge = Challenge.SOLUTIONS[challenge].objective;
+
+
+                setImage(new Image(Board.class.getResource(URI_BASE + decideColour(indexChallenge.charAt(index)) + ".png").toString()));
+                setFitHeight(CHALLENGE_SQUARE);
+                setFitWidth(CHALLENGE_SQUARE);
+
+                setLayoutX(x + (index % 3) * CHALLENGE_SQUARE );
+                setLayoutY(y + ((index/3)%3) * CHALLENGE_SQUARE);
+
+
+        }
+        public String decideColour(char c){
+            if (c == 'R')
+                return "sq-r";
+            else if (c == 'B')
+                return "sq-b";
+            else if (c == 'G')
+                return "sq-g";
+            else
+                return "sq-w";
+        }
+
+
 
     }
 
@@ -290,6 +340,17 @@ public class Board extends Application {
     }
 
     /**
+     * Add the objective to the board
+     */
+    private void addObjectiveToBoard(int dif) {
+        challengeGroup.getChildren().clear();
+        for (int i = 0;i < 9;i++){
+            challengeGroup.getChildren().add(new GPiece( dif,i, CHALLENGE_X, CHALLENGE_Y));
+        }
+
+    }
+
+    /**
      * Put all of the pieces back in their home position
      */
     private void resetPieces() {
@@ -300,10 +361,49 @@ public class Board extends Application {
     }
 
     /**
+     * Create the controls that allow the game to be restarted and the difficulty
+     * level set.
+     */
+    private void makeControls() {
+        Button button = new Button("Restart");
+        button.setLayoutX(CHESS_X +7 * SQUARE_SIZE);
+        button.setLayoutY(BOARD_HEIGHT - 55);
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                newGame();
+            }
+        });
+        controls.getChildren().add(button);
+
+        difficulty.setMin(1);
+        difficulty.setMax(5);
+        difficulty.setValue(0);
+        difficulty.setShowTickLabels(true);//刻度线的标签（数字什么的）
+        difficulty.setShowTickMarks(true);//显示刻度线
+        difficulty.setMajorTickUnit(1);//主要刻度线（显示标签的刻度线）的单位间隔
+        difficulty.setMinorTickCount(0);//每两个主刻度线之间的间隔
+        difficulty.setSnapToTicks(true);//是否滑动后的值与刻度线一致
+
+        difficulty.setLayoutX(609);//CHESS_X +7 * SQUARE_SIZE - 170
+        difficulty.setLayoutY(BOARD_HEIGHT - 50);
+        controls.getChildren().add(difficulty);
+
+        final Label difficultyCaption = new Label("Difficulty:");
+        difficultyCaption.setTextFill(Color.GREY);
+        difficultyCaption.setLayoutX(539);
+        difficultyCaption.setLayoutY(BOARD_HEIGHT - 50);
+        controls.getChildren().add(difficultyCaption);
+    }
+
+
+    /**
      * Start a new game, resetting everything as necessary
      */
     private void newGame() {
+        int dif = Challenge.diffiToNum((int) (difficulty.getValue() - 1));
         makePieces();
+        addObjectiveToBoard(dif);
         resetPieces();
     }
 
@@ -345,8 +445,11 @@ public class Board extends Application {
 
         root.getChildren().add(gpieces);
         root.getChildren().add(Chess);
+        root.getChildren().add(controls);
+        root.getChildren().add(challengeGroup);
 
         makeChess();//place a board
+        makeControls();
 
         newGame();
 
