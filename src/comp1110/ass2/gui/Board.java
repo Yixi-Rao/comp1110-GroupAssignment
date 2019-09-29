@@ -225,7 +225,6 @@ public class Board extends Application {
                 }
                 setPosition();
                 if (!validPiece()){
-                    System.out.println(validPiece());
                     snapToHome();}
                     //decide x and y position
             } else {
@@ -253,7 +252,6 @@ public class Board extends Application {
             for (String p:pieceState){
                 placement = placement + p;
             }
-            System.out.println(placement);
             if (placement.equals(""))
                 return true;
             return FocusGame.isPlacementStringValid(placement);
@@ -269,7 +267,6 @@ public class Board extends Application {
             toFront();
             setPosition();
             if (!validPiece()){
-                System.out.println(validPiece());
                 snapToHome();}
         }
 
@@ -406,29 +403,6 @@ public class Board extends Application {
         addObjectiveToBoard(dif);
         resetPieces();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // FIXME Task 7: Implement a basic playable Focus Game in JavaFX that only allows pieces to be placed in valid places
 
