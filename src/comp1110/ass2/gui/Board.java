@@ -21,28 +21,29 @@ import java.util.Map;
 
 public class Board extends Application {
 
-    private static final int SQUARE_SIZE = 47; // the width of the cell
+    private static final int SQUARE_SIZE = 47;      // the width of the cell
 
-    private static final int CHESS_MARGIN = 30;//the margin of the board
-    private static final int CHESS_WIDTH = 482;
-    private static final int CHESS_HEIGHT= 310;
-    private static final int CHESS_X =450 ;
-    private static final int CHESS_Y = 209;
-    private static final int MARGIN_X =0;//
-    private static final int MARGIN_Y =0;//
-    private static final int BOARD_WIDTH = 933;
-    private static final int BOARD_HEIGHT = 700;
-    private static final int PLAY_AREA_Y = 269;
-    private static final int PLAY_AREA_X = 484;
+    private static final int CHESS_WIDTH = 482;     // the width of the game board
+    private static final int CHESS_HEIGHT= 310;     // the height of the game board
+    private static final int CHESS_X =450 ;     // the x of the board coordinate
+    private static final int CHESS_Y = 209;     // the y of the board coordinate
+    private static final int MARGIN_X =0;       //the x of the MARGIN
+    private static final int MARGIN_Y =0;       //the y of the MARGIN
+    private static final int BOARD_WIDTH = 933;         // the width of stage
+    private static final int BOARD_HEIGHT = 700;        // the height of stage
+    private static final int PLAY_AREA_Y = 269;          // the x of the playing area
+    private static final int PLAY_AREA_X = 484;          // the y of the playing area
 
-    private static final int CHALLENGE_X = 626;
-    private static final int CHALLENGE_Y= 40;
-    private static final int CHALLENGE_SQUARE = 43;
+    private static final int CHALLENGE_X = 626;      // the x of the challenge board
+    private static final int CHALLENGE_Y= 40;         // the y of the challenge board
+    private static final int CHALLENGE_SQUARE = 43;     //the square size in challenge board
 
-    private static final long ROTATION_THRESHOLD = 50;
+    private static final long ROTATION_THRESHOLD = 50;      //Allow rotation every 50 ms
 
+    /* marker of the unplaced pieces */
     public static final String NOT_PLACED = "";
 
+    /* the fit height and width of each different piece */
     private final Map<String, double[]> pieceSizes = new HashMap<>() {{
         put("a", new double[] {43 * 3, 43 * 2});
         put("b", new double[] {43 * 4.0, 43 * 2.0});
@@ -70,6 +71,7 @@ public class Board extends Application {
     private static final String URI_BASE = "assets/";
     private static final String BASEBOARD_URI = Board.class.getResource(URI_BASE + "board.png").toString();
 
+    /* it will store the message of each piece which is already placed to the board */
     private String[] pieceState = new String[10];
 
     /* the difficulty slider */
@@ -113,9 +115,13 @@ public class Board extends Application {
 
                 setLayoutX(x + (index % 3) * CHALLENGE_SQUARE );
                 setLayoutY(y + ((index/3)%3) * CHALLENGE_SQUARE);
-
-
         }
+
+        /**
+         * decode the challenge colour to class instance colour
+         * @param c the char represent the colour
+         * @return the colour jpg name we want
+         */
         public String decideColour(char c){
             if (c == 'R')
                 return "sq-r";
@@ -130,7 +136,10 @@ public class Board extends Application {
 
 
     }
-
+    /**
+     * This class extends piece with the capacity for it to be dragged and dropped,
+     * and snap-to-grid.
+     */
     class DraggablePiece extends GPiece {
         int homeX, homeY;                                     // the position in the window where the piece should be when not on the board
         double mouseX, mouseY;                               // the last known mouse positions (used when dragging)
@@ -147,9 +156,11 @@ public class Board extends Application {
         DraggablePiece(char piece) {
             super(piece);
             this.id = piece;
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 4; i++) {   // create the four direction image of one piece
                 char idx = (char) (i + '0');
-                images[i] = new Image(Board.class.getResource(URI_BASE + piece + "-" + idx + ".png").toString());}
+                images[i] = new Image(Board.class.getResource(URI_BASE + piece + "-" + idx + ".png").toString());
+            }
+            //set up home location
             setImage(images[0]);
             orientation = 0;
             pieceState[piece - 'a'] = NOT_PLACED;
@@ -158,7 +169,7 @@ public class Board extends Application {
             homeY = MARGIN_Y + (((piece - 'a') / 2) % 5) * SQUARE_SIZE * 3;
             setLayoutY(homeY);
 
-                /* event handlers */
+            /* event handlers */
             setOnScroll(event -> {            // scroll to change orientation
                     if (System.currentTimeMillis() - lastRotationTime > ROTATION_THRESHOLD){
                         lastRotationTime = System.currentTimeMillis();
@@ -172,7 +183,7 @@ public class Board extends Application {
                 });
             setOnMouseDragged(event -> {      // mouse is being dragged
                     toFront();
-                    double movementX = event.getSceneX() - mouseX;//move
+                    double movementX = event.getSceneX() - mouseX;//movement of mouse
                     double movementY = event.getSceneY() - mouseY;
                     setLayoutX(getLayoutX() + movementX);
                     setLayoutY(getLayoutY() + movementY);
@@ -224,8 +235,9 @@ public class Board extends Application {
                     setLayoutY(PLAY_AREA_Y + 4 * SQUARE_SIZE);
                 }
                 setPosition();
-                if (!validPiece()){
-                    snapToHome();}
+                if (!validPiece()){ // if is overlap or not on the board snap it to home
+                    snapToHome();
+                }
                     //decide x and y position
             } else {
                 snapToHome();
@@ -249,12 +261,12 @@ public class Board extends Application {
          */
         private boolean validPiece() {
             String placement = "";
-            for (String p:pieceState){
+            for (String p:pieceState){  //set up all the placement as a placement string
                 placement = placement + p;
             }
             if (placement.equals(""))
                 return true;
-            return FocusGame.isPlacementStringValid(placement);
+            return FocusGame.isPlacementStringValid(placement);     //use already placement string and add it to new piece
         }
 
         /**
@@ -265,13 +277,14 @@ public class Board extends Application {
             setImage(images[(orientation)]);
             rotateSetFit(orientation);
             toFront();
-            setPosition();
+            setPosition();  //modify the location and orientation
             if (!validPiece()){
-                snapToHome();}
+                snapToHome();
+            }
         }
 
         private void rotateSetFit(int orientation) {
-            if (orientation == 1 || orientation == 3){
+            if (orientation == 1 || orientation == 3){  //if the rotation is 90 degree or 270 degree inverse the fit height and width
                 setFitHeight(pieceSizes.get(this.id+"")[0]);
                 setFitWidth(pieceSizes.get(this.id+"")[1]);
             } else {
@@ -304,7 +317,7 @@ public class Board extends Application {
             if (x < 0)// home position
                 pieceState[pieceID] = NOT_PLACED;
             else {
-                pieceState[pieceID] = ((char)(pieceID+'a')+"") + x + "" + y + "" + orientation;
+                pieceState[pieceID] = ((char)(pieceID+'a')+"") + x + "" + y + "" + orientation;     //set up the piece to piece state
             }
         }
     }

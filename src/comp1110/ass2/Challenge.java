@@ -4,12 +4,19 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * An challenge defines what the player must attempt to solve.   It is expressed
+ * in :
+ * 1.challenge (9 places of central board) which have 120 choices(from 'starter' to 'wizard')
+ * 2.solutions (may contain more than ones)
+ */
+
 public class Challenge {
 
     public static class Solution {
-        public String objective;
-        public String placement;
-        public Set<String> placements;
+        public String objective;    //The objects of the board which have 120 choices(from 'starter' to 'wizard')
+        public String placement;    //solutions of objective
+        public Set<String> placements;  //sometime contain more than ones solutions.
 
         Solution(String iObjective, String p1, String p2, String p3, String p4) {
             objective = iObjective;
@@ -28,6 +35,25 @@ public class Challenge {
             placements.add(iPlacement);
         }
     }
+
+    /**
+     *
+     * This array defines a set of 120 pre-defined Board objectives.
+     *
+     * There are 5 categories of objective, according to 5 difficulty levels, with
+     * 24 objectives per difficulty level, organized within the array as follows:
+     *
+     * Starter: 1-24
+     * Junior: 25-48
+     * Expert: 49-72
+     * Master: 73-96
+     * Wizard: 97-120
+     *
+     * Each objective is encoded in terms of:
+     * 1 - A string representing challenge (colour)
+     * 2 - A string representing solution
+     *
+     */
 
     public static final Solution[] SOLUTIONS = {
             new Solution("RRRBWBBRB",
@@ -89,7 +115,7 @@ public class Challenge {
             new Solution("BWGGWGGWB",
                     "a000b513c613d400e013f411g201h323i131j701"),
             new Solution("WBWGGBWGW",
-                    "a221b301c430d600e713f011g511h001i400j113"),//30 ------junior
+                    "a221b301c430d600e713f011g511h001i400j113"),//30
             new Solution("GWGGWBGGG",
                     "a610b130c330d002e020f401g721h101i520j500"),
             new Solution("BGGWGGGWB",
@@ -272,6 +298,13 @@ public class Challenge {
                     "a021b102c502d223e411f811g611h000i333j432")
     };
 
+    /**
+     * Choose a new objective, given a difficulty level.The method should select a randomized objective from the 120 pre-defined solutions,
+     *
+     * @param difficulty The difficulty of the game from 1 to 5
+     *
+     * @return the number of specified challenge
+     */
     public static int diffiToNum(int difficulty) {
         assert difficulty >= 0 && difficulty <= 3;
         int num = 0;
