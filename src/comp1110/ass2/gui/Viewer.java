@@ -154,7 +154,7 @@ public class Viewer extends Application {
                     System.out.println(pieceStartY);
                 }
 
-                String piecePath = Viewer.class.getResource(URI_BASE + pieceName + ".png").toString();
+                String piecePath = Viewer.class.getResource(URI_BASE + pieceName + "-0.png").toString();
                 ImageView pieceView = new ImageView(new Image(piecePath));
 
                 pieceView.setFitWidth(pieceWidth);

@@ -9,20 +9,40 @@ import java.util.Set;
  * (https://www.smartgames.eu/uk/one-player-games/iq-focus)
  */
 public class FocusGame {
-
+    /**
+     * a board with 43 grid and each cell representing a colour of part the piece
+     */
     public static Colours[][] gameStatesColour = new Colours[5][9];
 
+    /**
+     * a board with 43 grid and each cell representing a location of part the piece
+     */
     public static Piece[][] pieces = new Piece[5][9];
 
+    /**
+     * the nine location of centre of the board
+     */
     public static final Location[] centralLocation = {new Location(3,1),new Location(4,1),new Location(5,1),
                                                         new Location(3,2),new Location(4,2),new Location(5,2),
                                                         new Location(3,3),new Location(4,3),new Location(5,3)};
+    /**
+     * the range or domain of types
+     */
     public static final String[] types = {"a","b","c","d","e","f","g","h","i","j"};
 
+    /**
+     * the range or domain of coordinates
+     */
     public static final String[] orientations = {"0","1","2","3"};
 
+    /**
+     * the range or domain of x coordinates
+     */
     private static final int[] Xrange = {0,1,2,3,4,5,6,7,8};
 
+    /**
+     * the range or domain of y coordinates
+     */
     private static final int[] Yrange = {0,1,2,3,4};
 
 
@@ -116,7 +136,15 @@ public class FocusGame {
         // FIXME Task 5: determine whether a placement string is valid
         return true;
     }
+
+    /**
+     * Determine whether a piece string is on board.
+     * judging by the coordinates
+     * @param piece the piece will be test
+     * @return true if it is on the board, false otherwise
+     */
     public static boolean isPieceOnBoard(String piece){
+        //all the information all piece(Location,type,orientation)
         Piece piece1 = new Piece(piece);
         int x = piece1.getLocation().getX();
         int y = piece1.getLocation().getY();
@@ -135,7 +163,14 @@ public class FocusGame {
         return true;
     }
 
+    /**
+     * Determine whether a piece string is overlap with other pieces which is alreay on the board.
+     * test by comparing the piece coordinates with coordinates on the board
+     * @param piece the piece will be test
+     * @return true if it is overlap, false otherwise
+     */
     public static boolean isPieceOverlap(String piece) {
+        //all the information all piece(Location,type,orientation)
         Piece piece2 = new Piece(piece);
         int x = piece2.getLocation().getX();
         int y = piece2.getLocation().getY();
@@ -150,6 +185,10 @@ public class FocusGame {
         return false;
     }
 
+    /**
+     * Add a piece on to the board and update the game state.
+     * @param piece the piece will be added
+     */
     public static void addPiece(Piece piece){
         Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
         for (Location l:locations){
@@ -158,6 +197,10 @@ public class FocusGame {
         }
     }
 
+    /**
+     * Add a colour on to the board and update the game state.
+     * @param piece the piece will be added
+     */
     public static void addColour(Piece piece){
         Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
         Colours[] colours = piece.getColous();
@@ -194,13 +237,12 @@ public class FocusGame {
      * @return A set of viable piece placements, or null if there are none.
      */
     static Set<String> getViablePiecePlacements(String placement, String challenge, int col, int row) {
-        setChallenge(challenge);
-        Set<String> result = new HashSet<>();
-        for (int x:Xrange){
-            for (int y:Yrange){
-                for (String type:types){
+        setChallenge(challenge);    //first add the challenge to the game state so we have a criteria to test
+        Set<String> result = new HashSet<>();   //answer set of viable piece
+        for (int x:Xrange){                 //for all the x on the board try to find a piece
+            for (int y:Yrange){             //for all the y on the board try to find a piece
+                for (String type:types){    //for all the types on the board try to find a piece
                     for (String orientation:orientations){
-                        //System.out.println(placement +type + "" + col + "" + row + "" + orientation+" , " + isPlacementStringValid(placement + type + "" + col + "" + row + "" + orientation)  );
                         if (isPlacementStringValid(placement + type + "" + x + "" + y + "" + orientation) && isValidColour(new Piece(type + "" + x + "" + y + "" + orientation)) && isOccupyGrid(col,row,new Piece(type + "" + x + "" + y + "" + orientation))) {
                             result.add(type + "" + x + "" + y + "" + orientation);
                         }
@@ -208,19 +250,27 @@ public class FocusGame {
                 }
             }
         }
-
         gameStatesColour = new Colours[5][9];
         if (result.isEmpty())
             return null;
         return result;
     }// FIXME Task 6: determine the set of all viable piece placements given existing placements and a challenge
 
+    /**
+     * update the challenge colour to the board
+     * @param challenge the colour challenge string
+     */
     public static void setChallenge(String challenge){
         for (int i = 0 ;i<challenge.length();i++){
             gameStatesColour[centralLocation[i].getY()][centralLocation[i].getX()] = Colours.toColour(challenge.charAt(i));
         }
     }
 
+    /**
+     * Determine whether a colour is not against the challenge colour.
+     * @param piece the piece will be test
+     * @return true if it is valid false otherwise
+     */
     public static Boolean isValidColour(Piece piece){
         Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
         Colours[] colours = piece.getColous();
@@ -233,9 +283,16 @@ public class FocusGame {
         return true;
     }
 
+    /**
+     *Determine whether a piece is occupied the location we want
+     * @param col x of the location we want to occupied
+     * @param row y of the location we want to occupied
+     * @param piece the piece will be test
+     * @return true if it is occupied the piece we want false otherwise
+     */
     public  static Boolean isOccupyGrid(int col,int row,Piece piece){
-        Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
-        Location want = new Location(col,row);
+        Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation()); //piece location
+        Location want = new Location(col,row);  //initialise the wanted location
         for (Location l:locations){
             if (l.equals(want))
                 return true;

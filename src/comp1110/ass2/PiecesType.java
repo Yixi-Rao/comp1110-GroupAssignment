@@ -6,19 +6,36 @@ import static comp1110.ass2.Orientation.*;
 public enum PiecesType {
     A,B,C,D,E,F,G,H,I,J;
 
+    /**
+     * given a location in terms of x,y and an orientation of a piece,it will return the coordinates of all
+     * the piece according to board.
+     * @param x x of piece location
+     * @param y y of piece location
+     * @param orientation orientation of piece
+     * @return all the piece locations refer to board coordinate
+     */
     public Location[] createPiece(int x,int y, Orientation orientation){
-        int[] pieceOffsets = pieceMapOffset[this.ordinal()][Integer.parseInt(orientation.toChar()+"")];
-        Location[] locations = new Location[pieceOffsets.length/2];
+        int[] pieceOffsets = pieceMapOffset[this.ordinal()][Integer.parseInt(orientation.toChar()+"")];     //offsets pf a specified piece
+        Location[] locations = new Location[pieceOffsets.length/2]; //all the piece locations refer to board coordinate
         for (int i = 0;i < pieceOffsets.length / 2;i++){
             locations[i] = new Location(x + pieceOffsets[2*i],y + pieceOffsets[2*i + 1]);
         }
         return locations;
     }
 
+    /**
+     * given an orientation of a piece,it will return the colours of all
+     * the piece according to board.
+     * @param orientation orientation of piece
+     * @return all the colour refer to board
+     */
     public Colours[] createColours(Orientation orientation){
         return colourMapOffset[this.ordinal()][Integer.parseInt(orientation.toChar()+"")];
     }
 
+    /**
+     * offsets of coordinate of all the types, with the order of "a,b,c.....i" and "0,1,2,3"
+     */
     public static int[][][] pieceMapOffset = new int[][][]{
             {{0,0,1,0,2,0,1,1},     {1,0,0,1,1,1,1,2},     {1,0,0,1,1,1,2,1},     {0,0,0,1,1,1,0,2}},
             {{1,0,2,0,3,0,0,1,1,1}, {0,0,0,1,1,1,1,2,1,3}, {2,0,3,0,0,1,1,1,2,1}, {0,0,0,1,0,2,1,2,1,3}},
@@ -32,7 +49,9 @@ public enum PiecesType {
             {{0,0,1,0,2,0,3,0,0,1}, {0,0,1,0,1,1,1,2,1,3}, {3,0,0,1,1,1,2,1,3,1}, {0,0,0,1,0,2,0,3,1,3}}
     };
 
-
+    /**
+     * colours of piece of all the types, with the order of "a,b,c.....i" and "0,1,2,3"
+     */
     public static Colours[][][] colourMapOffset = new Colours[][][]{
             {{GREEN,WHITE,RED,RED},           {GREEN,RED,WHITE,RED},          {RED,RED,WHITE,GREEN},          {RED,WHITE,RED,GREEN}},
             {{BLUE,GREEN,GREEN,WHITE,WHITE}, {WHITE,WHITE,BLUE,GREEN,GREEN}, {WHITE,WHITE,GREEN,GREEN,BLUE}, {GREEN,GREEN,BLUE,WHITE,WHITE}},
