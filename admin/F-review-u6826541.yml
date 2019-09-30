@@ -1,0 +1,38 @@
+# Write your name and UID here.
+#
+reviewer:
+    name: Yixi Rao
+    uid: u6826541
+
+# Write the name of the author of the code here.
+#
+author:
+  name: Wenxuan Li
+  uid: u6825691
+
+# Write the class or method being reviewed here.
+#
+component: The draggleblePiece(innner class of Board Class) and DraggablePiece Method(constructor)
+
+# Write a list of review comments here.
+#
+comments:
+  - 1. The best features of this code is the data updating and checking is very ingenious and this code deals with dragging
+    piece and snap to it to a grid,it is very smart that it stores the information of each type of piece such as location, orintation
+    in an array, so if we add all the strings together it will be a placement string, therefore we can utilise the Task 5 function(isPlacementStringVAlid)
+    to determint wherther it is overlap and on board, which is very efficient and space-saving.It is very accurate because the code modifies all the information
+    of the piece after rotation and movement which will result in the placement changing, so it will Ensure maximum data accuracy.
+
+    2. The code is well-documented, every function has a comment on the top of the function name and the description is easy to understand
+    and for some code that is hard to understand has some commnets. Besides, variables have comments as well.
+
+    3.The class and method structure decomposition is every appropriate, methods which can modify same behavior are in the same class and the Modifiers
+    of the all class and method are correct for example some  virables of board height and width has modifiers of "static final"
+
+    4. All the methods and variables properly named, all the names of the author written is based on the description of what this method does or what this variable
+    is going to do.
+    
+
+
+
+
