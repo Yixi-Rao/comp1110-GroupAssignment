@@ -20,8 +20,10 @@ public class PieceTest {
     }
 
 
-
-
+    /**
+     * Test the function placementToOrientation
+     * The last digit of placement String represents the orientation of pieces
+     */
     @Test
     public void testPlacementToOrientation(){
         test("a000",Orientation.NORTH);
@@ -30,6 +32,12 @@ public class PieceTest {
         test("a003",Orientation.WEST);
     }
 
+
+    /**
+     * Test the function pieceToLoacation
+     * The second digit of placement String represents the X position of pieces
+     * The third digit of placement String represents the Y position of pieces
+     */
     @Test
     public void testPieceToLocation() {
         for (int i = 0; i <= 8; i++){

@@ -10,16 +10,25 @@ public class Piece {
     private Colours[] colours;        // The piece's colours
 
     public Piece(String piece){
-        this.piecesType = PiecesType.valueOf(Character.toString(piece.charAt(0)-32));
-        this.orientation = placementToOrientation(piece);
-        this.location = pieceToLocation(piece);
-        this.colours = piecesType.createColours(orientation);
+        this.piecesType = PiecesType.valueOf(Character.toString(piece.charAt(0)-32)); // the type of pieces
+        this.orientation = placementToOrientation(piece);  // the orientation of pieces
+        this.location = pieceToLocation(piece); // the location of pieces
+        this.colours = piecesType.createColours(orientation);  // the colour of pieces
 
     }
-    public Location getLocation(){return location;}
-    public Orientation getOrientation(){return orientation;}
-    public PiecesType getPiecesType(){return piecesType;}
-    public Colours[] getColous(){return colours;}
+    public Location getLocation(){return location;} // get the location of pieces
+    public Orientation getOrientation(){return orientation;} // get the orientation of pieces
+    public PiecesType getPiecesType(){return piecesType;} // get the type of pieces
+    public Colours[] getColous(){return colours;} // get the colour of pieces
+
+    /**
+     * given a placement piece,it will return the orientation of all
+     * the piece according to board.
+     * The last digit of the String represents the orientation of piece
+     *
+     * @param piece placement String
+     * @return the orientation of piece
+     * */
 
     public static Orientation placementToOrientation(String piece) {
         if (piece.charAt(3) == '0')
@@ -31,6 +40,17 @@ public class Piece {
         else
             return WEST;
     }
+
+    /**
+     * given a placement piece,it will return the location of all
+     * the piece according to board.
+     * The second digit of the String represents the X position of piece
+     * The third digit of the String represents the Y position of piece
+     *
+     * @param piece placement String
+     * @return the loaction of piece
+     * */
+
     public static Location pieceToLocation(String piece) {
         int x = 0;
         switch (piece.charAt(1)){

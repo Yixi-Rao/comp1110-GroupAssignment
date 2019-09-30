@@ -9,7 +9,14 @@ import static junit.framework.TestCase.assertEquals;
 
 public class OrientationTest {
 
-
+    /**
+     * Test the class Orientation
+     * The last digit of placement String represents the orientation of pieces
+     * '0' -- NORTH
+     * '1' -- EAST
+     * '2' -- SOUTH
+     * '3' -- WEST
+     */
     @Test
     public void orientationTest(){
         assertEquals('0', Orientation.NORTH.toChar());
