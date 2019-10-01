@@ -1,14 +1,14 @@
 #Write your name and UID here.
 #
 reviewer:
-  name: Wenxuan Li
-  uid: u6825691
+    name: Wenxuan Li
+    uid: u6825691
 
 # Write the name of the author of the code here.
 #
 author:
-  name: Fang Peng
-  uid: u6504563
+    name: Fang Peng
+    uid: u6504563
 
 # Write the class or method being reviewed here.
 #
