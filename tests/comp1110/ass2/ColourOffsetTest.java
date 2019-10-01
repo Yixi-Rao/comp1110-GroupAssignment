@@ -1,5 +1,9 @@
 package comp1110.ass2;
 
+/*
+authorship details:  written by the Yixi rao
+ */
+
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;

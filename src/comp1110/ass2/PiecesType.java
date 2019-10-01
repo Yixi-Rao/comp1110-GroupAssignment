@@ -1,8 +1,15 @@
 package comp1110.ass2;
 
+/*
+authorship details:  written by the group and offset written by Yixi Rao
+ */
+
 import static comp1110.ass2.Colours.*;
 import static comp1110.ass2.Orientation.*;
 
+/**
+ * All the piece type from A to J
+ */
 public enum PiecesType {
     A,B,C,D,E,F,G,H,I,J;
 

@@ -1,4 +1,9 @@
 package comp1110.ass2;
+
+/*
+authorship details:  written by the group
+ */
+
 /**
  * All situations of piece's colours
  */

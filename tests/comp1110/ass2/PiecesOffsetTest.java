@@ -1,9 +1,14 @@
 package comp1110.ass2;
-
+/*
+authorship details:  written by the wenxuan Li
+ */
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
 
+/**
+ * to test the piece off set table wherther it can map to the right place and give the correct coordinates
+ */
 public class PiecesOffsetTest {
     @Test
     public void offsetOf_x00y(){

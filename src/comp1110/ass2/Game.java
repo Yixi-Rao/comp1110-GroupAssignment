@@ -1,5 +1,9 @@
 package comp1110.ass2;
 
+/*
+authorship details:  written by the group
+ */
+
 public class Game {
     public Challenge challenge;
     /*public Colours[][] gameStates = {

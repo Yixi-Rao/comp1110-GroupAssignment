@@ -1,5 +1,9 @@
 package comp1110.ass2;
 
+/*
+authorship details:  written by the fang peng
+ */
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 

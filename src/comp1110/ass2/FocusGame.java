@@ -1,5 +1,9 @@
 package comp1110.ass2;
 
+/*
+authorship details:  written by the task 1- 3 written by Wenxuan Li, task 4 written by Fang Peng, task 5 - 7 written by Yixi Rao
+ */
+
 import java.util.HashSet;
 import java.util.Set;
 /**
