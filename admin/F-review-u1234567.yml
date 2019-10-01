@@ -1,23 +1,39 @@
 # Write your name and UID here.
 #
 reviewer:
-    name:
-    uid:
+    name: Fang Peng
+    uid: u6504563
 
 # Write the name of the author of the code here.
 #
 author:
-  name:
-  uid:
+  name: Yixi Rao
+  uid: u6826541
 
 # Write the class or method being reviewed here.
 #
-component:
+component: The method makeChess and parameter settings in Board class
 
 # Write a list of review comments here.
 #
 comments:
-  -
+  - 1. The best feature of this code is the appropriate setting of parameters, which makes the interface shown in
+       a good way. Esprecially the data used in adjusting the Board, the author took everthing into consideration,
+       and calculated the reasonable distance about the width, length and margin. And then use piecesSize to fit
+       height and width of each different piece. Moreover, the method makechess set up the group that represents
+       the places that make the board. So the Gui looks clear and beautiful.
+
+    2. The code is well-documented, every setting of parameters are followed by a detailed description and the codes
+       are given a clear comment so that they are easy to understand.
+
+    3. The class and method structure decomposition are very appropriate. every parameter which needed to be setted and
+       functions are defined first and then are followed by useful methods so that all the codes are shown in a clear
+       way.
+
+    4. The choices of method names and variable names are easy to understand and keep consistent throughout the
+       whole class.
+
+    5. All these codes can run successfully.
 
 
 
