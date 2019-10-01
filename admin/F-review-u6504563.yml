@@ -17,7 +17,7 @@ component: The method makeChess and parameter settings in Board class
 # Write a list of review comments here.
 #
 comments:
-  - 1. The best feature of this code is the appropriate setting of parameters, which makes the interface shown in
+  - "1. The best feature of this code is the appropriate setting of parameters, which makes the interface shown in
   -     a good way. Esprecially the data used in adjusting the Board, the author took everthing into consideration,
   -     and calculated the reasonable distance about the width, length and margin. And then use piecesSize to fit
   -     height and width of each different piece. Moreover, the method makechess set up the group that represents
@@ -33,7 +33,7 @@ comments:
   -  4. The choices of method names and variable names are easy to understand and keep consistent throughout the
   -     whole class.
   -
-  -  5. All these codes can run successfully.
+  -  5. All these codes can run successfully."
 
 
 

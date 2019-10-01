@@ -17,7 +17,7 @@ component: The Java class Viewer in src/comp1110.ass2/gui/assets
 # Write a list of review comments here.
 #
 comments:
-  - 1. The best features of this code is the use of drawing tool in JavaFx. The author made good use of built-in methods
+  - "1. The best features of this code is the use of drawing tool in JavaFx. The author made good use of built-in methods
   - like Rectangle and line in JavaFx. Futhermore, the data used in the task like the piece size, the gaming area,
   - length of external  and internal frame line are calculatd correctly which makes the Gui very clear and nice.
   - Moreover, the method makePlacement in the class achieve the renewal the piece placement which is the most hard
@@ -32,5 +32,5 @@ comments:
   - 4. The choices of method names and variable names are very clear and suitable and keep consistent throughout the
   - whole class which make team members and code readers easily understandwhat they can do.
   -
-  - 5. I did not find any errors in the class, the whole class functions correctly due to the requirment of task 5.
+  - 5. I did not find any errors in the class, the whole class functions correctly due to the requirment of task 5."
 
