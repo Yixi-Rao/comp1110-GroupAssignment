@@ -379,7 +379,7 @@ public class FocusGame {
     }
 
     public static String getValidPlacementString(String placement,String challenge,int x,int y){
-        System.out.println(placement);
+        //System.out.println(placement);
         String result = placement;
         addAllPiece(placement);
 
@@ -400,7 +400,7 @@ public class FocusGame {
         for (String piece:viablePieces){
             result = getValidPlacementString(placement + piece,challenge,x,y);
             if (result.length() == 40){
-                System.out.println("1");
+                //System.out.println("1");
                 pieces = new Piece[5][9];
                 return result;}
             pieces = new Piece[5][9];
@@ -410,7 +410,7 @@ public class FocusGame {
     }
 
     public static String findCentralPieces(String placement,String challenge,int x,int y){
-        System.out.println(placement);
+        //System.out.println(placement);
         String result = placement;
         addAllPiece(placement);
         if (isCentreAllOccupied()){
