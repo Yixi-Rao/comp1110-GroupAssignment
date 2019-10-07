@@ -1,7 +1,7 @@
 package comp1110.ass2;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 /**
  * This class provides the text interface for the IQ Focus Game
  * <p>
@@ -44,6 +44,8 @@ public class FocusGame {
      * the range or domain of y coordinates
      */
     private static final int[] Yrange = {0,1,2,3,4};
+
+    public static Set<String> validCentralPieces = new HashSet<>();
 
 
     /**
@@ -120,6 +122,7 @@ public class FocusGame {
      * @return True if the placement sequence is valid
      */
     public static boolean isPlacementStringValid(String placement) {
+        pieces = new Piece[5][9];
         if (!isPlacementStringWellFormed(placement)){
             return false;}
         for (int i = 0;i < placement.length()/4;i++) {
@@ -197,6 +200,13 @@ public class FocusGame {
         }
     }
 
+    public static void addAllPiece(String placement){
+        for (int i = 0;i < placement.length()/4;i++) {
+            String subpiece = placement.substring(4 * i, 4 + (4 * i));
+            addPiece(new Piece(subpiece));
+        }
+    }
+
     /**
      * Add a colour on to the board and update the game state.
      * @param piece the piece will be added
@@ -239,28 +249,52 @@ public class FocusGame {
     static Set<String> getViablePiecePlacements(String placement, String challenge, int col, int row) {
         setChallenge(challenge);    //first add the challenge to the game state so we have a criteria to test
         Set<String> result = new HashSet<>();   //answer set of viable piece
-        for (int x:Xrange){                 //for all the x on the board try to find a piece
-            for (int y:Yrange){             //for all the y on the board try to find a piece
-                for (String type:types){    //for all the types on the board try to find a piece
+        for (int y:Yrange){                 //for all the x on the board try to find a piece
+            if (Math.abs(y - row) > 3)
+                continue;
+            for (int x:Xrange){         //for all the y on the board try to find a piece
+                if (x == 0 && y== 4)
+                    continue;
+                if (Math.abs(x - col) > 3)
+                    continue;
+                for (String type:refineTypes(placement)){    //for all the types on the board try to find a piece
                     for (String orientation:orientations){
-                        if (isPlacementStringValid(placement + type + "" + x + "" + y + "" + orientation) && isValidColour(new Piece(type + "" + x + "" + y + "" + orientation)) && isOccupyGrid(col,row,new Piece(type + "" + x + "" + y + "" + orientation))) {
+                        //System.out.println(type + "" + x + "" + y + "" + orientation);
+                        //System.out.println(isPlacementStringValid(placement + type + "" + x + "" + y + "" + orientation));
+                        //System.out.println(isOccupyGrid(col,row,new Piece(type + "" + x + "" + y + "" + orientation)));
+                        //System.out.println(isValidColour(new Piece(type + "" + x + "" + y + "" + orientation)));
+                        if (isPlacementStringValid(placement + type + "" + x + "" + y + "" + orientation) && isOccupyGrid(col,row,new Piece(type + "" + x + "" + y + "" + orientation)) && isValidColour(new Piece(type + "" + x + "" + y + "" + orientation)) ) {
                             result.add(type + "" + x + "" + y + "" + orientation);
                         }
                     }
                 }
             }
         }
+        pieces = new Piece[5][9];
         gameStatesColour = new Colours[5][9];
         if (result.isEmpty())
             return null;
         return result;
     }// FIXME Task 6: determine the set of all viable piece placements given existing placements and a challenge
 
+
+    public static List<String> refineTypes(String placement){
+        List<String> typeList = new ArrayList<>(Arrays.asList(types));
+        List<String> refineList = new ArrayList<>(Arrays.asList(types));
+        for (int i = 0;i < placement.length()/4;i++){
+            if (typeList.contains(placement.charAt(i*4)+"")){
+                refineList.remove(placement.charAt(i*4)+"");
+            }
+        }
+        return refineList;
+    }
+
     /**
      * update the challenge colour to the board
      * @param challenge the colour challenge string
      */
     public static void setChallenge(String challenge){
+        gameStatesColour = new Colours[5][9];
         for (int i = 0 ;i<challenge.length();i++){
             gameStatesColour[centralLocation[i].getY()][centralLocation[i].getX()] = Colours.toColour(challenge.charAt(i));
         }
@@ -276,6 +310,7 @@ public class FocusGame {
         Colours[] colours = piece.getColous();
         for (int i = 0;i < locations.length;i++){
             //System.out.println(locations.length+","+i);
+            //System.out.println(piece.getPiecesType()+""+piece.getLocation().getX()+""+piece.getLocation().getY()+""+piece.getOrientation());
             if (gameStatesColour[locations[i].getY()][locations[i].getX()] != null && gameStatesColour[locations[i].getY()][locations[i].getX()] != colours[i]){
                 //System.out.println(locations[i].getY()+","+locations[i].getX()+","+colours[i]);
                 return false;}
@@ -317,38 +352,152 @@ public class FocusGame {
      * the challenge.
      */
     public static String getSolution(String challenge) {
+        validCentralPieces.clear();
+        findCentralPieces("",challenge,3,1);
+        String answer = "";
+
+        for (String placement:validCentralPieces){
+            if ((getValidPlacementString(placement,challenge,0,0)).length() == 40){
+                answer =  getValidPlacementString(placement,challenge,0,0);
+                break;
+            }
+        }
+        String[] sortedPieces = new String[10];
+        for (int i = 0;i < answer.length()/4;i++) {
+            String subpiece = answer.substring(4 * i, 4 + (4 * i));
+            if (subpiece.charAt(3) - '0' > 1 && (subpiece.charAt(0) == 'f'|| subpiece.charAt(0) == 'g'))
+               subpiece = subpiece.substring(0,3) +  ((subpiece.charAt(3) - '0')-2);
+            int index = subpiece.charAt(0) - 'a';
+            sortedPieces[index] = subpiece;
+        }
+        String realAnswer = "";
+        for (String p:sortedPieces){
+            realAnswer = realAnswer + p;
+        }
         // FIXME Task 9: determine the solution to the game, given a particular challenge
-        return null;
+        return realAnswer;
     }
 
+    public static String getValidPlacementString(String placement,String challenge,int x,int y){
+        System.out.println(placement);
+        String result = placement;
+        addAllPiece(placement);
+
+        if (result.length() == 40){
+            pieces = new Piece[5][9];
+            return result;
+        }
+        while (pieces[y][x] != null){
+            Location nextP1 = nextPoint(x,y);
+            x = nextP1.getX();y = nextP1.getY();
+        }
+        Set<String> viablePieces = getViablePiecePlacements(placement,challenge,x,y);
+        if (viablePieces == null){
+            pieces = new Piece[5][9];
+            return "";
+        }
+
+        for (String piece:viablePieces){
+            result = getValidPlacementString(placement + piece,challenge,x,y);
+            if (result.length() == 40){
+                System.out.println("1");
+                pieces = new Piece[5][9];
+                return result;}
+            pieces = new Piece[5][9];
+        }
+        //System.out.println(placement);
+        return result;
+    }
+
+    public static String findCentralPieces(String placement,String challenge,int x,int y){
+        System.out.println(placement);
+        String result = placement;
+        addAllPiece(placement);
+        if (isCentreAllOccupied()){
+            validCentralPieces.add(result);
+            return result;
+        }
+
+        while (pieces[y][x] != null){
+            Location nextP1 = nextCentralPoint(x,y);
+            x = nextP1.getX();y = nextP1.getY();
+        }
+        if (x == 6 && y == 3){
+            pieces = new Piece[5][9];
+            return "";
+        }
+        Set<String> viablePieces = getViablePiecePlacements(placement,challenge,x,y);
+        if (viablePieces == null){
+            pieces = new Piece[5][9];
+            return "";
+        }
+
+        for (String piece:viablePieces){
+
+            result = findCentralPieces(placement + piece,challenge,x,y);
+//            if (isCentreAllOccupied()){
+//                System.out.println("1");
+//                validCentralPieces.add(result);
+//                pieces = new Piece[5][9];
+//                }
+            pieces = new Piece[5][9];
+        }
+        return result;
+    }
+
+    public static boolean isCentreAllOccupied(){
+        for (Location l:centralLocation){
+            if (pieces[l.getY()][l.getX()] == null)
+                return false;
+        }
+        return true;
+    }
+
+    public static Location nextCentralPoint(int x,int y){
+        if (x == 5 && y == 3){
+            return new Location(6,3);
+        }
+        int newX,newY = y;
+        if (x == 5){
+            newX = 3;
+            if (y != 3)
+                newY = y + 1;
+        }else
+            newX = x + 1;
+        return new Location(newX,newY);
+    }
+
+    public static Location nextPoint(int x,int y){
+        int newX,newY = y;
+        if (x == 8){
+            newX = 0;
+            if (y != 4)
+                newY = y + 1;
+        }else
+            newX = x + 1;
+        if (newX == 0 && newY == 4){
+            newX = 1;newY = 4;
+        }
+        return new Location(newX,newY);
+    }
+
+
     public static void main(String[] args) {
-        int a = 'b' - 'a';
-        System.out.println(a);
+        pieces = new Piece[5][9];
+        //validCentralPieces.clear();
+        //System.out.println(findCentralPieces("","BGGWGGGWB",3,1));
+        //System.out.println(validCentralPieces);
+        //System.out.println(getSolution("BGGWGGGWB"));
+        //System.out.println(getValidPlacementString("g201f411b513h323","BWGGWGGWB",0,0));
+        //System.out.println(getSolution("BRBBRBBWB"));
 
-        System.out.println((char)(a+'a')+"");
-        //Set<String> strings = new HashSet<>(getViablePiecePlacements("j001","RRRRRWRWW",0,2));
-        //System.out.println(strings);
-         //System.out.println(isPlacementStringValid("j001f021"));;
-       // System.out.println(isValidColour(new Piece("b022")));
-        /*
-        for (String s:strings){
 
-            System.out.println(s);
-
-        }*/
+        //task 6
+        //System.out.println(isPlacementStringValid("g201f411b513h323a000") && isOccupyGrid(0,0,new Piece("a000")) && isValidColour(new Piece("a000")));
+        //System.out.println(getViablePiecePlacements("b210","BGGWGGGWB",4,2));
+        //System.out.println(isPlacementStringValid("g201f411b513h323a000"));
+        //System.out.println(isOccupyGrid(0,0,new Piece("a000")));
+        //System.out.println(isValidColour(new Piece("a000")));
 
     }
 }
-//[e003, c002, e001, a000, c001, e002, g003, g002, e000, g001, g000, i000, i001, i002, i003, a001, a002, c003, a003, d002, d003, b001, d000, f003, b000, d001, f002, f001, f000, j000, j001, h000, h001, j003, h002, h003, b003, b002]
-//[a000, a003, b001, b003, c001, c002, d000, d002, d003, e000, e001, e003, f000, f001, f002, f003, g000, g002, h000, h001, h003, i000, i002, i003, j000, j001, j003]
-
-// a000, a003,-------a000, a001, a002, a003
-// b001, b003,-------b000, b001, b002, b003,
-// c001, c002,-------c001, c002, c003,
-// d000, d002, d003,------- d000, d001, d002, d003,
-// e000, e001, e003, -------e000, e001, e002, e003
-// f000, f001, f002, f003,-------f000, f001, f002, f003
-// g000, g002,-------g000, g001, g002, g003,
-// h000, h001, h003,-------h000, h001, h002, h003
-// i000, i002, i003-------i000, i001, i002, i003
-// j000, j001, j003-------j000, j001, j003
