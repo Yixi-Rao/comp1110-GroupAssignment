@@ -1,0 +1,36 @@
+# Write your name and UID here.
+#
+reviewer:
+   name: Wenxuan Li
+   uid: u6825691
+
+# Write the name of the author of the code here.
+#
+author:
+  name: Fang Peng
+  uid: u6504563
+
+# Write the class or method being reviewed here.
+#
+component: The Java class Viewer in src/comp1110.ass2/gui/assets
+
+# Write a list of review comments here.
+#
+comments:
+  -  "1. The best features of this code is the use of drawing tool in JavaFx. The author made good use of built-in methods
+  -  like Rectangle and line in JavaFx. Futhermore, the data used in the task like the piece size, the gaming area,
+  -  length of external  and internal frame line are calculatd correctly which makes the Gui very clear and nice.
+  -  Moreover, the method makePlacement in the class achieve the renewal the piece placement which is the most hard
+  -  part in the task.
+  -
+  -  2. The whole class is well-ducumented. Every method in the class has a good description what it does on the top.
+  -  Besides, important data used in the class all have a clear description near it which makes the data clear.
+  -
+  -  3. The class and method structure decomposition are very appropriate. The important data, group setting, resource
+  -  location are defined first and then are followed by useful methods which is a great structure.
+  -
+  -  4. The choices of method names and variable names are very clear and suitable and keep consistent throughout the
+  -  whole class which make team members and code readers easily understandwhat they can do.
+  -
+  -  5. I did not find any errors in the class, the whole class functions correctly due to the requirment of task 5."
+

@@ -2,6 +2,14 @@ package comp1110.ass2;
 
 import static comp1110.ass2.Orientation.*;
 
+/*
+authorship details:  written by the group
+ */
+
+
+/**
+ * store the information of one piece(TxyN), which have type, orientation, location,colours.
+ */
 public class Piece {
 
     private PiecesType piecesType;  // Which tile type is it (a ... j)

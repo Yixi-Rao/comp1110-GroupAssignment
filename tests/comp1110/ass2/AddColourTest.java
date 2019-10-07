@@ -1,12 +1,20 @@
 package comp1110.ass2;
-
+/*
+authorship details:  written by the yixi rao
+ */
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
 
+/**
+ * Use some particular point to test whether the piece map the proper colour to the board
+ */
+
 public class AddColourTest {
 
-
+    /**
+     * first test whether it is in the correct place
+     */
     @Test
     public void positionTest() {
         FocusGame.addColour(new Piece("a000"));

@@ -1,5 +1,10 @@
 package comp1110.ass2.gui;
 
+/*
+authorship details: discussed together and the board setup and draggblePiece, GPiece written by the Yixi rao wenxuan Li
+inisialization and main method is written by Fang peng
+ */
+
 import comp1110.ass2.Challenge;
 import comp1110.ass2.FocusGame;
 import javafx.application.Application;

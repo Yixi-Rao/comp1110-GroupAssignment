@@ -1,5 +1,9 @@
 package comp1110.ass2.gui;
 
+/*
+authorship details:  written by the Fang Peng
+ */
+
 //import com.sun.glass.ui.View;
 import javafx.application.Application;
 import javafx.scene.Group;

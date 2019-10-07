@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+/*
+authorship details:  written by the group
+ */
+
 /**
  * An challenge defines what the player must attempt to solve.   It is expressed
  * in :
