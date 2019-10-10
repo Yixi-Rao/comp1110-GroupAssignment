@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -68,7 +69,6 @@ public class Board extends Application {
     private final Group solution = new Group();
     private final Group Chess = new Group();
     private final Group controls = new Group();
-    private final Group exposed = new Group();
     private final Group challengeGroup = new Group();
 
 
@@ -98,6 +98,32 @@ public class Board extends Application {
             this.pieceID = piece - 'a';
             setFitHeight(pieceSizes.get(piece+"")[1]);
             setFitWidth(pieceSizes.get(piece+"")[0]);
+        }
+
+        /**
+         * Construct a playing tile, which is placed on the board at the start of the game,
+         * as a part of some challenges
+         *
+         * @param piece  The letter representing the tile to be created.
+         * @param orientation   The integer representation of the tile to be constructed
+         */
+        GPiece(char piece, int orientation) {
+
+
+
+            if (piece > 'j' || piece < 'a') {
+                throw new IllegalArgumentException("Bad tile: \"" + piece + "\"");
+            }
+            this.pieceID = piece - 'a';
+            if (orientation == 1 || orientation == 3){  //if the rotation is 90 degree or 270 degree inverse the fit height and width
+                setFitHeight(pieceSizes.get(piece+"")[0]);
+                setFitWidth(pieceSizes.get(piece+"")[1]);
+            } else {
+                setFitHeight(pieceSizes.get(piece+"")[1]);
+                setFitWidth(pieceSizes.get(piece+"")[0]);
+            }
+            setImage(new Image(Board.class.getResource(URI_BASE + piece + "-" + (int)orientation + ".png").toString()));
+
         }
 
         /**
@@ -327,6 +353,52 @@ public class Board extends Application {
         }
     }
 
+    private void setUpHandlers(Scene scene){
+        /* create handlers for key press and release events */
+        scene.setOnKeyPressed(event -> {
+             if (event.getCode() == KeyCode.SLASH) {
+                 solution.setOpacity(1.0);   //里面都是tile都已经放到了版上，按solution的排列来的
+                 gpieces.setOpacity(0);
+                 event.consume();
+            }
+        });
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.SLASH) {
+                 solution.setOpacity(0);
+                 gpieces.setOpacity(1.0);
+                 event.consume();
+            }
+        });
+    }
+
+    /**
+     * Set up the group that represents the solution (and make it transparent)
+     *
+     * @param solution The solution as an array of chars.
+     */
+    private void makeSolution(String solution){
+        this.solution.getChildren().clear();
+        if (solution.length() == 0)
+            return;
+        if (solution.length() != 40)
+            throw new IllegalArgumentException("Solution incorrect length: " + solution);
+
+        for (int i = 0; i < solution.length(); i+=4){
+            GPiece gpiece = new GPiece(solution.charAt(i),solution.charAt(i + 3) - '0');
+            int x = solution.charAt(i+1) - '0';
+            int y = solution.charAt(i+2) - '0';
+            gpiece.setLayoutX(PLAY_AREA_X + (x * SQUARE_SIZE));
+            gpiece.setLayoutY(PLAY_AREA_Y + (y * SQUARE_SIZE));
+            this.solution.getChildren().add(gpiece);
+        }
+        this.solution.setOpacity(0);
+    }
+
+
+
+
+
+
     /**
      * Set up the group that represents the places that make the board
      */
@@ -416,7 +488,11 @@ public class Board extends Application {
      * Start a new game, resetting everything as necessary
      */
     private void newGame() {
-        int dif = Challenge.diffiToNum((int) (difficulty.getValue() - 1));
+        int dif = Challenge.diffiToNum((int) (difficulty.getValue() - 1));  //return the number of the challenge
+        String solution = (Challenge.SOLUTIONS[dif].placement);
+        System.out.println(solution);
+        if (solution != null)
+            makeSolution(solution);
         makePieces();
         addObjectiveToBoard(dif);
         resetPieces();
@@ -437,9 +513,11 @@ public class Board extends Application {
 
         root.getChildren().add(gpieces);
         root.getChildren().add(Chess);
+        root.getChildren().add(solution);
         root.getChildren().add(controls);
         root.getChildren().add(challengeGroup);
 
+        setUpHandlers(scene);
         makeChess();//place a board
         makeControls();
 
