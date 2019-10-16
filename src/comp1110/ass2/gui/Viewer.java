@@ -29,8 +29,11 @@ import java.util.Map;
  * class does not play a game, it just illustrates various piece
  * placements.
  */
-public class Viewer extends Application {
 
+public class Viewer extends Application {
+    /*
+    authorship details:  written by the Fang Peng
+     */
     /* board layout */
     private static final int SQUARE_SIZE = 60;
     private static final int VIEWER_WIDTH = 720;
@@ -83,14 +86,18 @@ public class Viewer extends Application {
         put("i", new double[] {SQUARE_SIZE * 2.0, SQUARE_SIZE * 2.0});
         put("j", new double[] {SQUARE_SIZE * 4.0, SQUARE_SIZE * 2.0});
     }};
-
+    /*
+    authorship details:  written by the Fang Peng
+     */
     private Line drawLine(double startX, double startY, double endX, double endY) {
         Line line = new Line(startX, startY, endX, endY);
         line.setStroke(LINE_COLOR);
         line.setStrokeWidth(LINE_STROKE);
         return line;
     }
-
+    /*
+    authorship details:  written by the Fang Peng
+     */
     private Rectangle drawRectangle(double startX, double startY, double sideLenX, double sideLenY,
                                     int strokeWidth, Color strokeColor, Color fillColor) {
         Rectangle rectangle = new Rectangle(startX, startY, sideLenX, sideLenY);
@@ -99,7 +106,9 @@ public class Viewer extends Application {
         rectangle.setStrokeWidth(strokeWidth);
         return rectangle;
     }
-
+    /*
+    authorship details:  written by the Fang Peng
+     */
     void drawGameArea() {
         // Draw external frame line
         Rectangle externalFrame = drawRectangle(
@@ -136,6 +145,9 @@ public class Viewer extends Application {
      * @param placement A valid placement string
      */
     void makePlacement(String placement) {
+        /*
+        authorship details:  written by the Fang Peng
+        */
         graphs.getChildren().clear();
         if (!placement.isBlank()) {
             String[] pieces = placement.split("(?<=\\G.{4})");
@@ -175,6 +187,9 @@ public class Viewer extends Application {
 
     /**
      * Create a basic text field for input and a refresh button.
+     */
+    /*
+    authorship details:  written by the Fang Peng
      */
     private void makeControls() {
         Label label1 = new Label("Placement:");

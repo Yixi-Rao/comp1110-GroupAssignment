@@ -22,6 +22,10 @@ public class Challenge {
         public String placement;    //solutions of objective
         public Set<String> placements;  //sometime contain more than ones solutions.
 
+
+        /*
+        authorship details:  written by the group
+        */
         Solution(String iObjective, String p1, String p2, String p3, String p4) {
             objective = iObjective;
             placement = p1;
@@ -173,7 +177,7 @@ public class Challenge {
             new Solution("BBBBWBBWB",
                     "a021b102c613d223e402f440g420h000i333j701"),
             new Solution("BBBBWBBBB",
-                    "a021b102c430d223e402f711g321h000i523j701", "a021b102c430d223e402f801g321h000i523j703", "a132b611c703d432e211f500g420h100i402j003", "a500b103c703d200e513f140g210h522i330j003"),
+                    "a021b102c430d223e402f711g321h000i523j701"),
             new Solution("BBBWWBWBB",
                     "a013b102c613d432e402f000g420h122i121j701"),
             new Solution("WBBWBWWBW",

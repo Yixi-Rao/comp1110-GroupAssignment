@@ -9,6 +9,10 @@ import java.util.*;
  * (https://www.smartgames.eu/uk/one-player-games/iq-focus)
  */
 public class FocusGame {
+    /*
+    authorship details:  written by the Group
+     */
+
     /**
      * a board with 43 grid and each cell representing a colour of part the piece
      */
@@ -45,9 +49,14 @@ public class FocusGame {
      */
     private static final int[] Yrange = {0,1,2,3,4};
 
+    /**
+     * it will store the valid central location
+     */
     public static Set<String> validCentralPieces = new HashSet<>();
 
-
+    /*
+    authorship details:  written by the Wenxuan Li
+     */
     /**
      * Determine whether a piece placement is well-formed according to the
      * following criteria:
@@ -76,6 +85,9 @@ public class FocusGame {
         return true;
     }
 
+    /*
+    authorship details:  written by the Wenxuan Li
+     */
     /**
      * Determine whether a placement string is well-formed:
      * - it consists of exactly N four-character piece placements (where N = 1 .. 10);
@@ -108,6 +120,9 @@ public class FocusGame {
 
     }
 
+    /*
+    authorship details:  written by the Wenxuan Li and yixi rao
+     */
     /**
      * Determine whether a placement string is valid.
      *
@@ -140,6 +155,9 @@ public class FocusGame {
         return true;
     }
 
+    /*
+    authorship details:  written by the Wenxuan Li and yixi rao
+     */
     /**
      * Determine whether a piece string is on board.
      * judging by the coordinates
@@ -166,6 +184,9 @@ public class FocusGame {
         return true;
     }
 
+    /*
+    authorship details:  written by the Wenxuan Li and yixi rao
+     */
     /**
      * Determine whether a piece string is overlap with other pieces which is alreay on the board.
      * test by comparing the piece coordinates with coordinates on the board
@@ -187,7 +208,9 @@ public class FocusGame {
         }
         return false;
     }
-
+    /*
+    authorship details:  written by the Wenxuan Li and yixi rao
+     */
     /**
      * Add a piece on to the board and update the game state.
      * @param piece the piece will be added
@@ -199,7 +222,13 @@ public class FocusGame {
 
         }
     }
-
+    /*
+    authorship details:  written by the Wenxuan Li and yixi rao
+     */
+    /**
+     * Add all the piece on to the board and update the game state.
+     * @param placement all pieces that will be added
+     */
     public static void addAllPiece(String placement){
         for (int i = 0;i < placement.length()/4;i++) {
             String subpiece = placement.substring(4 * i, 4 + (4 * i));
@@ -207,6 +236,9 @@ public class FocusGame {
         }
     }
 
+    /*
+    authorship details:  written by the yixi rao
+     */
     /**
      * Add a colour on to the board and update the game state.
      * @param piece the piece will be added
@@ -219,8 +251,9 @@ public class FocusGame {
         }
     }
 
-
-
+    /*
+    authorship details:  written by the yixi rao
+     */
     /**
      * Given a string describing a placement of pieces and a string describing
      * a challenge, return a set of all possible next viable piece placements
@@ -259,10 +292,6 @@ public class FocusGame {
                     continue;
                 for (String type:refineTypes(placement)){    //for all the types on the board try to find a piece
                     for (String orientation:orientations){
-                        //System.out.println(type + "" + x + "" + y + "" + orientation);
-                        //System.out.println(isPlacementStringValid(placement + type + "" + x + "" + y + "" + orientation));
-                        //System.out.println(isOccupyGrid(col,row,new Piece(type + "" + x + "" + y + "" + orientation)));
-                        //System.out.println(isValidColour(new Piece(type + "" + x + "" + y + "" + orientation)));
                         if (isPlacementStringValid(placement + type + "" + x + "" + y + "" + orientation) && isOccupyGrid(col,row,new Piece(type + "" + x + "" + y + "" + orientation)) && isValidColour(new Piece(type + "" + x + "" + y + "" + orientation)) ) {
                             result.add(type + "" + x + "" + y + "" + orientation);
                         }
@@ -277,7 +306,14 @@ public class FocusGame {
         return result;
     }// FIXME Task 6: determine the set of all viable piece placements given existing placements and a challenge
 
-
+    /*
+    authorship details:  written by the yixi rao
+     */
+    /**
+     * function which will reduce the number of the usable types (some types is already used)
+     * @param placement pieces that is already placed on the board
+     * @return all types of the pieces which is not used
+     */
     public static List<String> refineTypes(String placement){
         List<String> typeList = new ArrayList<>(Arrays.asList(types));
         List<String> refineList = new ArrayList<>(Arrays.asList(types));
@@ -289,6 +325,10 @@ public class FocusGame {
         return refineList;
     }
 
+
+    /*
+    authorship details:  written by the yixi rao
+     */
     /**
      * update the challenge colour to the board
      * @param challenge the colour challenge string
@@ -300,6 +340,9 @@ public class FocusGame {
         }
     }
 
+    /*
+    authorship details:  written by the yixi rao
+     */
     /**
      * Determine whether a colour is not against the challenge colour.
      * @param piece the piece will be test
@@ -309,15 +352,16 @@ public class FocusGame {
         Location[] locations = piece.getPiecesType().createPiece(piece.getLocation().getX(),piece.getLocation().getY(),piece.getOrientation());
         Colours[] colours = piece.getColous();
         for (int i = 0;i < locations.length;i++){
-            //System.out.println(locations.length+","+i);
-            //System.out.println(piece.getPiecesType()+""+piece.getLocation().getX()+""+piece.getLocation().getY()+""+piece.getOrientation());
             if (gameStatesColour[locations[i].getY()][locations[i].getX()] != null && gameStatesColour[locations[i].getY()][locations[i].getX()] != colours[i]){
-                //System.out.println(locations[i].getY()+","+locations[i].getX()+","+colours[i]);
                 return false;}
         }
         return true;
     }
 
+
+    /*
+    authorship details:  written by the yixi rao
+     */
     /**
      *Determine whether a piece is occupied the location we want
      * @param col x of the location we want to occupied
@@ -335,6 +379,10 @@ public class FocusGame {
         return false;
     }
 
+
+    /*
+    authorship details:  written by the yixi rao
+     */
     /**
      * Return the canonical encoding of the solution to a particular challenge.
      *
@@ -353,16 +401,17 @@ public class FocusGame {
      */
     public static String getSolution(String challenge) {
         validCentralPieces.clear();
-        findCentralPieces("",challenge,3,1);
+        findCentralPieces("",challenge,3,1); // which will first fills the central nine cell or location and return the placement
         String answer = "";
 
         for (String placement:validCentralPieces){
             if ((getValidPlacementString(placement,challenge,0,0)).length() == 40){
-                answer =  getValidPlacementString(placement,challenge,0,0);
+                answer =  getValidPlacementString(placement,challenge,0,0); //find the answer and return
                 break;
             }
         }
         String[] sortedPieces = new String[10];
+        // answer is found and we need to reorder the answer by sorting than (a...j)
         for (int i = 0;i < answer.length()/4;i++) {
             String subpiece = answer.substring(4 * i, 4 + (4 * i));
             if (subpiece.charAt(3) - '0' > 1 && (subpiece.charAt(0) == 'f'|| subpiece.charAt(0) == 'g'))
@@ -378,73 +427,94 @@ public class FocusGame {
         return realAnswer;
     }
 
+
+    /*
+    authorship details:  written by the yixi rao
+     */
+    /**
+     * given a challenge and some placement find the valid placement string that satisfy the challenge and it is all valid
+     * @param placement placement that is already on the board
+     * @param challenge challenge we are going to achieve
+     * @param x location x which it must be occupied
+     * @param y location y which it must be occupied
+     * @return the partial correct or total correct placement
+     */
     public static String getValidPlacementString(String placement,String challenge,int x,int y){
-        //System.out.println(placement);
         String result = placement;
         addAllPiece(placement);
 
-        if (result.length() == 40){
+        if (result.length() == 40){   //if the placement contains 10 pieces and it will be return as final correct answer
             pieces = new Piece[5][9];
             return result;
         }
-        while (pieces[y][x] != null){
+        while (pieces[y][x] != null){   //if the loication is already occupied by some pieces than it will be skipped
             Location nextP1 = nextPoint(x,y);
             x = nextP1.getX();y = nextP1.getY();
         }
-        Set<String> viablePieces = getViablePiecePlacements(placement,challenge,x,y);
-        if (viablePieces == null){
+        Set<String> viablePieces = getViablePiecePlacements(placement,challenge,x,y);  // find the set of valid pieces of a particular location
+        if (viablePieces == null){   // it is null means it is a dead cell and this a optimisation
             pieces = new Piece[5][9];
             return "";
         }
 
         for (String piece:viablePieces){
             result = getValidPlacementString(placement + piece,challenge,x,y);
-            if (result.length() == 40){
-                //System.out.println("1");
+            if (result.length() == 40){  //jump out of the loop if we find the solution
                 pieces = new Piece[5][9];
                 return result;}
             pieces = new Piece[5][9];
         }
-        //System.out.println(placement);
         return result;
     }
 
+    /*
+    authorship details:  written by the yixi rao
+     */
+    /**
+     * a recursive method which will find all the combination of all the valid  
+     * @param placement placement that is already on the board
+     * @param challenge challenge we are going to achieve
+     * @param x location x which it must be occupied
+     * @param y location y which it must be occupied
+     * @return the partial correct or total correct placement which just occupy the central nine cell or location
+     */
     public static String findCentralPieces(String placement,String challenge,int x,int y){
-        //System.out.println(placement);
         String result = placement;
         addAllPiece(placement);
-        if (isCentreAllOccupied()){
+        if (isCentreAllOccupied()){  //if the placement occupies all the nine central cells and it will stop recurring
             validCentralPieces.add(result);
             return result;
         }
 
-        while (pieces[y][x] != null){
+        while (pieces[y][x] != null){  //if the location is already occupied by some pieces than it will be skipped
             Location nextP1 = nextCentralPoint(x,y);
             x = nextP1.getX();y = nextP1.getY();
         }
-        if (x == 6 && y == 3){
+        if (x == 6 && y == 3){ //meet the final location of the central location
             pieces = new Piece[5][9];
             return "";
         }
         Set<String> viablePieces = getViablePiecePlacements(placement,challenge,x,y);
-        if (viablePieces == null){
+        if (viablePieces == null){ // it is null means it is a dead cell and this a optimisation
             pieces = new Piece[5][9];
             return "";
         }
 
-        for (String piece:viablePieces){
-
+        for (String piece:viablePieces){// next recursion
             result = findCentralPieces(placement + piece,challenge,x,y);
-//            if (isCentreAllOccupied()){
-//                System.out.println("1");
-//                validCentralPieces.add(result);
-//                pieces = new Piece[5][9];
-//                }
             pieces = new Piece[5][9];
         }
         return result;
     }
 
+
+    /*
+    authorship details:  written by the yixi rao
+     */
+    /**
+     * this will determine whether the all central location is occupied or not
+     * @return  true if all the nine location is occupied, false otherwise
+     */
     public static boolean isCentreAllOccupied(){
         for (Location l:centralLocation){
             if (pieces[l.getY()][l.getX()] == null)
@@ -453,6 +523,15 @@ public class FocusGame {
         return true;
     }
 
+    /*
+    authorship details:  written by the yixi rao
+     */
+    /**
+     * find the next point of the central location, from left to right and up to down
+     * @param x current X location
+     * @param y current Y location
+     * @return next Location
+     */
     public static Location nextCentralPoint(int x,int y){
         if (x == 5 && y == 3){
             return new Location(6,3);
@@ -467,6 +546,15 @@ public class FocusGame {
         return new Location(newX,newY);
     }
 
+    /*
+    authorship details:  written by the yixi rao
+     */
+    /**
+     *  find the next point with respect to current location from left to right and up to down
+     * @param x current X location
+     * @param y current Y location
+     * @return next Location
+     */
     public static Location nextPoint(int x,int y){
         int newX,newY = y;
         if (x == 8){
@@ -484,9 +572,9 @@ public class FocusGame {
 
     public static void main(String[] args) {
         pieces = new Piece[5][9];
-        //validCentralPieces.clear();
-        //System.out.println(findCentralPieces("","BGGWGGGWB",3,1));
-        //System.out.println(validCentralPieces);
+        validCentralPieces.clear();
+        System.out.println(findCentralPieces("","BGGWGGGWB",3,1));
+        System.out.println(validCentralPieces);
         //System.out.println(getSolution("BGGWGGGWB"));
         //System.out.println(getValidPlacementString("g201f411b513h323","BWGGWGGWB",0,0));
         //System.out.println(getSolution("BRBBRBBWB"));
@@ -498,6 +586,6 @@ public class FocusGame {
         //System.out.println(isPlacementStringValid("g201f411b513h323a000"));
         //System.out.println(isOccupyGrid(0,0,new Piece("a000")));
         //System.out.println(isValidColour(new Piece("a000")));
-
+        //[i201j410f122a520c130g432, i201j410f122a520c130g430, i201j410f120a520c130g430, i201j410f120a520c130g432, i202j410h103a520c130g430, i303j410h103a520c130g430, i210h201j500b512c130g432, i303j410h103a520c130g432, d100j410i223a520c130g430, i210h201j500b512c130g430, d100j410i223a520c130g432, i202j410h103a520c130g432, i210h201j500b512a122g430, i210h201j500a520c130g432, i210h201b502a520c130g430, i210h201j500b512a122g432, b210h402c130g430, i210h201j500a520c130g430, b210h402c130g432, i201j410h103a520c130g432, b102j410i223a520c130g432, i210h201b502a520c130g432, b102j410i223a520c130g430, i210j410a520c130g430, i210j410a520c130g432, i201j410h103a520c130g430, e102j410b022a520c130g430, i303j410b022a520c130g432, e102j410b022a520c130g432, i303j410b022a520c130g430, b102j410f122a520c130g432, b102j410f122a520c130g430, b102j410f120a520c130g432, i202j410b022a520c130g430, i202j410b022a520c130g432, b102j410f120a520c130g430, d100j410f120a520c130g430, i210h201j510c130g430, i210h201j510a122g430, d100j410f122a520c130g430, i210h201j510c130g432, d100j410f122a520c130g432, i210h201j510a122g432, d100j410f120a520c130g432, e102j410f120a520c130g432, i201j410b022a520c130g432, i202j410f122a520c130g430, i201j410b022a520c130g430, e102j410f122a520c130g432, i303j410f120a520c130g432, i202j410f120a520c130g430, e102j410f122a520c130g430, i202j410f120a520c130g432, i303j410f120a520c130g430, e102j410i223a520c130g430, e102j410f120a520c130g430, e102j410i223a520c130g432, i202j410f122a520c130g432, d100j410b022a520c130g430, d100j410b022a520c130g432, i303j410f122a520c130g432, i303j410f122a520c130g430]
     }
 }

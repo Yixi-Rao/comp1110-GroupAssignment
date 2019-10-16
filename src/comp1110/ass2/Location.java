@@ -1,7 +1,7 @@
 package comp1110.ass2;
 
 /*
-authorship details:  written by the group
+authorship details:  the whole class written by the group
  */
 
 /**
