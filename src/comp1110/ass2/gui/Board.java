@@ -302,7 +302,7 @@ public class Board extends Application {
          */
         private boolean validPiece() {
             String placement = "";
-            for (String p:pieceState){  //set up all the placement as a placement string
+            for (String p:pieceState){  //set up all the placement as a placement string/
                 placement = placement + p;
             }
             if (placement.equals(""))
