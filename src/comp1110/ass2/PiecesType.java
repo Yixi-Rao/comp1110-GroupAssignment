@@ -13,6 +13,10 @@ import static comp1110.ass2.Orientation.*;
 public enum PiecesType {
     A,B,C,D,E,F,G,H,I,J;
 
+
+    /*
+    authorship details:  written by the yixi rao
+    */
     /**
      * given a location in terms of x,y and an orientation of a piece,it will return the coordinates of all
      * the piece according to board.
@@ -30,6 +34,9 @@ public enum PiecesType {
         return locations;
     }
 
+    /*
+    authorship details:  written by the yixi rao
+    */
     /**
      * given an orientation of a piece,it will return the colours of all
      * the piece according to board.
@@ -40,6 +47,10 @@ public enum PiecesType {
         return colourMapOffset[this.ordinal()][Integer.parseInt(orientation.toChar()+"")];
     }
 
+
+    /*
+    authorship details:  written by the yixi rao
+    */
     /**
      * offsets of coordinate of all the types, with the order of "a,b,c.....i" and "0,1,2,3"
      */
@@ -56,6 +67,10 @@ public enum PiecesType {
             {{0,0,1,0,2,0,3,0,0,1}, {0,0,1,0,1,1,1,2,1,3}, {3,0,0,1,1,1,2,1,3,1}, {0,0,0,1,0,2,0,3,1,3}}
     };
 
+
+    /*
+    authorship details:  written by the yixi rao
+    */
     /**
      * colours of piece of all the types, with the order of "a,b,c.....i" and "0,1,2,3"
      */
@@ -67,7 +82,7 @@ public enum PiecesType {
             {{BLUE,BLUE,BLUE,RED,RED},       {RED,BLUE,RED,BLUE,BLUE},         {RED,RED,BLUE,BLUE,BLUE},       {BLUE,BLUE,RED,BLUE,RED}},
             {{WHITE,WHITE,WHITE},            {WHITE,WHITE,WHITE},              {WHITE,WHITE,WHITE},             {WHITE,WHITE,WHITE}},
             {{WHITE,BLUE,BLUE,WHITE},        {WHITE,BLUE,BLUE,WHITE},          {WHITE,BLUE,BLUE,WHITE},         {WHITE,BLUE,BLUE,WHITE}},
-            {{RED,GREEN,GREEN,WHITE,WHITE},  {WHITE,WHITE,RED,GREEN,GREEN},   {WHITE,WHITE,RED,GREEN,GREEN},   {GREEN,GREEN,RED,WHITE,WHITE}},
+            {{RED,GREEN,GREEN,WHITE,WHITE},  {WHITE,WHITE,RED,GREEN,GREEN},   {WHITE,WHITE,GREEN,GREEN,RED},   {GREEN,GREEN,RED,WHITE,WHITE}},
             {{BLUE,BLUE,WHITE},               {BLUE,WHITE,BLUE},                {WHITE,BLUE,BLUE},               {BLUE,WHITE,BLUE}},
             {{GREEN,GREEN,WHITE,RED,GREEN},  {GREEN,GREEN,GREEN,WHITE,RED},    {GREEN,RED,WHITE,GREEN,GREEN},  {RED,WHITE,GREEN,GREEN,GREEN}}
     };
