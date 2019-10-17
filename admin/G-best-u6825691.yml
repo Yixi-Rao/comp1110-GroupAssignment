@@ -22,6 +22,15 @@ class:
    -  Orientaion
    -  Loacation
 
+# I wish to submit the following methods as entirely my own (remove this if
+# you want to just submit classes):
+method:
+  - isPlacementStringWellFormed
+  - isPiecePlacementWellFormed
+  - isPlacementStringValid
+  - isPieceOnBoard
+  - isPieceOverlap
+
 
 
 # sign *your* name and uid here
