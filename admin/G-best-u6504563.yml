@@ -20,7 +20,7 @@ declaration: >-
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-   - Location
+   - Solution
    - Colours
 
 # I wish to submit the following methods as entirely my own (remove this if
